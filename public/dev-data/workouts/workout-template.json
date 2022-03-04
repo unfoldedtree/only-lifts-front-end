@@ -1,0 +1,30 @@
+[
+    '{{repeat(10, 20)}}',
+    {
+      _id: '{{objectId()}}',
+      index: '{{index()}}',
+      guid: '{{guid()}}',
+      isActive: '{{bool()}}',
+      name: '{{lorem(1, "words")}}',
+      about: '{{lorem(1, "paragraphs")}}',
+      created: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
+      tags: [
+        '{{repeat(7)}}',
+        '{{lorem(1, "words")}}'
+      ],
+      exercises: [
+        '{{repeat(3, 7)}}',
+        {
+          id: '{{index()}}',
+          name: '{{lorem(1, "words")}}',
+          sets: [
+            '{{repeat(3,7)}}',
+            {
+              reps: '{{integer(5,8)}}',
+              weight: '{{integer(100, 200)}}'  
+            }
+          ]
+        }
+      ]
+    }
+  ]

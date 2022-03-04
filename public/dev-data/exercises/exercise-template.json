@@ -1,0 +1,23 @@
+[
+    {
+        "_id": "",
+        "name": "",
+        "explanation": "",
+        "url": "",
+        "type": [
+            "Barbell",
+            "Dumbbell",
+            "Body weight",
+            "Kettlebell",
+            "Machine",
+            "Fixed bar",
+            "Cable",
+            "Cardio"
+        ],
+        "target" : [
+            "Upper body",
+            "Lower body",
+            "Full body"
+        ]
+    }
+]

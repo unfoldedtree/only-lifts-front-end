@@ -1,0 +1,554 @@
+[
+  {
+    "_id": "61fbe0813c552eb742ec5822",
+    "index": 0,
+    "guid": "9a808003-56bf-488d-8961-3d23aaf87e76",
+    "isActive": true,
+    "name": "Compound with Arms",
+    "about": "Good for beginners looking to build a solid foundation.\r\n",
+    "created": "2019-08-24T10:14:11 +05:00",
+    "tags": [
+      "compound",
+      "full body",
+      "beginner"
+    ],
+    "schedule": [
+      {
+        "name": "Exercise 1",
+        "status": "completed",
+        "exercises": [
+          {
+            "name": "Overhead Press",
+            "success": true,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Chinups",
+            "success": true,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Deadlifts",
+            "success": true,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 220,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Exercise 2",
+        "status": "upcoming",
+        "exercises": [
+          {
+            "name": "Bench Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Curls",
+            "success": false,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Leg Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false,
+                "amrap": true
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Exercise 3",
+        "status": "upcoming",
+        "exercises": [
+          {
+            "name": "Overhead Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Chinups",
+            "success": false,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Deadlifts",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 220,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Exercise 4",
+        "status": "upcoming",
+        "exercises": [
+          {
+            "name": "Bench Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Curls",
+            "success": false,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Deadlifts",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 220,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Exercise 5",
+        "status": "upcoming",
+        "exercises": [
+          {
+            "name": "Overhead Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 45,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Chinups",
+            "success": false,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Leg Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 170,
+                "completed": false,
+                "amrap": true
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Exercise 6",
+        "status": "upcoming",
+        "exercises": [
+          {
+            "name": "Bench Press",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "completed": false
+              },
+              {
+                "reps": 5,
+                "weight": 150,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          },
+          {
+            "name": "Curls",
+            "success": false,
+            "sets": [
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              },
+              {
+                "reps": 10,
+                "weight": 0,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 2.5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": false,
+                "amount": 0
+              }
+            }
+          },
+          {
+            "name": "Deadlifts",
+            "success": false,
+            "sets": [
+              {
+                "reps": 5,
+                "weight": 220,
+                "amrap": true,
+                "completed": false
+              }
+            ],
+            "incrementScheme": {
+              "weightIncrement": 5,
+              "firstRest": 90,
+              "secondRest": 180,
+              "failRest": 300,
+              "doubleReps": {
+                "flag": true,
+                "amount": 10
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

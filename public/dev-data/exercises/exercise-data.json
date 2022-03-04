@@ -1,0 +1,586 @@
+[
+    {
+        "_id": "1",
+        "name": "Ab Rollout",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "2",
+        "name": "Ab Wheel",
+        "explanation": "ab wheel is a...",
+        "url": "www.abwheel.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "3",
+        "name": "Back Extension",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "4",
+        "name": "Barbell Row",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "5",
+        "name": "Bench Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "6",
+        "name": "Bent over Dumbbell Raise",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "7",
+        "name": "Blast Strap Pushup",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "8",
+        "name": "Cable Kickbacks",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Cable",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "9",
+        "name": "Cable Pushdown",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Cable",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "10",
+        "name": "Cable Row",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Cable",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "11",
+        "name": "Calf Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "12",
+        "name": "Chest Supported Rows",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "13",
+        "name": "Chinups",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "14",
+        "name": "Close Grip Bench Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "15",
+        "name": "Close Grip Pulldown",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "16",
+        "name": "Crunches",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "17",
+        "name": "Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "18",
+        "name": "Deadlift",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "19",
+        "name": "Decline Bench Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "20",
+        "name": "Dips",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "21",
+        "name": "Donkey Calf Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "22",
+        "name": "Dumbbell Bench Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "23",
+        "name": "Dumbbell Concentration Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "24",
+        "name": "Dumbbell Fly",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "25",
+        "name": "Dumbbell Row",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "26",
+        "name": "Dumbbell Shoulder Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "27",
+        "name": "Face Pull",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "28",
+        "name": "Front Dumbbell Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "29",
+        "name": "Front Squat",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "30",
+        "name": "Glute Ham Raise",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "31",
+        "name": "Good Mornings",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "32",
+        "name": "Hack Squats",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "33",
+        "name": "Hammer Strength Chest Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "34",
+        "name": "Hanging Leg Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "35",
+        "name": "Incline Bench Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "36",
+        "name": "Incline Cable Flyes",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "37",
+        "name": "Incline Dumbbell Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "38",
+        "name": "Lat Pulldowns",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "39",
+        "name": "Leg Extension",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "40",
+        "name": "Leg Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "41",
+        "name": "Lying Leg Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "42",
+        "name": "Lying Leg Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "43",
+        "name": "Lying Tricep Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "44",
+        "name": "One-legged Squats",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "45",
+        "name": "Overhead Press",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "46",
+        "name": "Plank",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "47",
+        "name": "Power Clean",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "48",
+        "name": "Preacher Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Fixed Bar",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "49",
+        "name": "Pull Ups",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "50",
+        "name": "Push Ups",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "51",
+        "name": "Rack Chins",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "52",
+        "name": "Rear Lateral Raise",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "53",
+        "name": "Reverse Grip Bent Over Rows",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "54",
+        "name": "Reverse Lunges",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "55",
+        "name": "Romanian Deadlift",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "56",
+        "name": "Seated Calf Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "57",
+        "name": "Seated Leg Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "58",
+        "name": "Seated Tricep Extension",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "59",
+        "name": "Shrugs",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "60",
+        "name": "Side Lateral Raise",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "61",
+        "name": "Side Plank",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "62",
+        "name": "Sit Ups",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Body weight",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "63",
+        "name": "Skull Crushers",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Fixed bar",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "64",
+        "name": "Spider Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "66",
+        "name": "Squat",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "67",
+        "name": "Standing Calf Raises",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "68",
+        "name": "Standing Leg Curls",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "69",
+        "name": "Standing Overhead Tricep Extension",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "70",
+        "name": "Standing Tricep Extension",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Dumbbell",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "71",
+        "name": "Stiff Legged Deadlift",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "72",
+        "name": "Sumo Deadlift",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Lower body"
+    },
+    {
+        "_id": "73",
+        "name": "Tricep Pushdown",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Machine",
+        "target" : "Upper body"
+    },
+    {
+        "_id": "74",
+        "name": "Upright Row",
+        "explanation": "ab rollout is a...",
+        "url": "www.abrollout.com",
+        "type": "Barbell",
+        "target" : "Upper body"
+    }
+]

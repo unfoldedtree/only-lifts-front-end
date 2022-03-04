@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
+import { workoutStore } from '@/stores/workoutInfo';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -25,8 +26,9 @@ import './theme/variables.css';
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
-  
+  .use(router)
+  .use(workoutStore);
+
 router.isReady().then(() => {
   app.mount('#app');
 });

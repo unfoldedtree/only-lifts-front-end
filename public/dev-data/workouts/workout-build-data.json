@@ -1,0 +1,260 @@
+[
+    {
+      "_id": "61fbe0813c552eb742ec5822",
+      "index": 0,
+      "guid": "9a808003-56bf-488d-8961-3d23aaf87e76",
+      "isActive": true,
+      "name": "Compound with Arms",
+      "about": "Good for beginners looking to build a solid foundation.\r\n",
+      "created": "2019-08-24T10:14:11 +05:00",
+      "tags": [
+        "compound",
+        "full body",
+        "beginner"
+      ],
+      "schedule": [
+        {
+            "name": "Test Day One",
+            "exercises": [
+                {
+                    "name": "Overhead Press",
+                    "sets": [
+                      {
+                        "reps": 5,
+                        "weight": 45
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 45
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 45,
+                        "amrap": true
+                      }
+                    ],
+                    "incrementScheme": {
+                        "weightIncrement": 2.5,
+                        "firstRest": 90,
+                        "secondRest": 180,
+                        "failRest": 300,
+                        "doubleReps": {
+                            "flag": true,
+                            "amount": 10
+                        }
+                    }
+                },
+                {
+                    "name": "Chinups",
+                    "sets": [
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        },
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        }
+                      ],
+                    "incrementScheme": {
+                          "weightIncrement": 2.5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": false,
+                              "amount": 0
+                          }
+                    }
+                },
+                {
+                    "name": "Deadlifts",
+                    "sets": [
+                        {
+                          "reps": 5,
+                          "weight": 225,
+                          "amrap": true
+                        }
+                    ],
+                    "incrementScheme": {
+                          "weightIncrement": 5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": true,
+                              "amount": 10
+                          }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Test Day Two",
+            "exercises": [
+                {
+                    "name": "Bench Press",
+                    "sets": [
+                      {
+                        "reps": 5,
+                        "weight": 150
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 150
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 150,
+                        "amrap": true
+                      }
+                    ],
+                    "incrementScheme": {
+                        "weightIncrement": 2.5,
+                        "firstRest": 90,
+                        "secondRest": 180,
+                        "failRest": 300,
+                        "doubleReps": {
+                            "flag": true,
+                            "amount": 10
+                        }
+                    }
+                },
+                {
+                    "name": "Curls",
+                    "sets": [
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        },
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        }
+                      ],
+                    "incrementScheme": {
+                          "weightIncrement": 2.5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": false,
+                              "amount": 0
+                          }
+                    }
+                },
+                {
+                    "name": "Leg Press",
+                    "sets": [
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        },
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        },
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        }
+                    ],
+                    "incrementScheme": {
+                          "weightIncrement": 5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": true,
+                              "amount": 10
+                          }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Test Day Three",
+            "exercises": [
+                {
+                    "name": "Overhead Press",
+                    "sets": [
+                      {
+                        "reps": 5,
+                        "weight": 45
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 45
+                      },
+                      {
+                        "reps": 5,
+                        "weight": 45,
+                        "amrap": true
+                      }
+                    ],
+                    "incrementScheme": {
+                        "weightIncrement": 2.5,
+                        "firstRest": 90,
+                        "secondRest": 180,
+                        "failRest": 300,
+                        "doubleReps": {
+                            "flag": true,
+                            "amount": 10
+                        }
+                    }
+                },
+                {
+                    "name": "Chinups",
+                    "sets": [
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        },
+                        {
+                          "reps": 10,
+                          "weight": 0
+                        }
+                      ],
+                    "incrementScheme": {
+                          "weightIncrement": 2.5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": false,
+                              "amount": 0
+                          }
+                    }
+                },
+                {
+                    "name": "Deadlift",
+                    "sets": [
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        },
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        },
+                        {
+                            "reps": 5,
+                            "weight": 170
+                        }
+                    ],
+                    "incrementScheme": {
+                          "weightIncrement": 5,
+                          "firstRest": 90,
+                          "secondRest": 180,
+                          "failRest": 300,
+                          "doubleReps": {
+                              "flag": true,
+                              "amount": 10
+                          }
+                    }
+                }
+            ]
+        }
+      ]
+    }
+]
