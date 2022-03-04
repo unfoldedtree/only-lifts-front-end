@@ -8,14 +8,12 @@
     </div>
 
     <div class="program-utilities">
-      <ion-button color="light" expand="block">Add Day</ion-button>
+      <ion-button @click="addDay()" color="light" expand="block">Add Day</ion-button>
       <ion-button color="tertiary" expand="block">Save Program</ion-button>
     </div>
 
     <div class="post-content">
-      <ion-accordion-group :multiple="true">
-        <day-component @remove-day="removeDay" v-for="(day , index) in exerciseSchedule" v-bind:key="day.name" v-bind:day="day" v-bind:index="index"></day-component>
-      </ion-accordion-group>
+      <day-component @remove-day="removeDay" @clone-day="cloneDay" v-for="(day , index) in exerciseSchedule" v-bind:key="day.name" v-bind:day="day" v-bind:index="index"></day-component>
     </div>
   </div>
 </template>
@@ -23,7 +21,7 @@
 <script lang="ts">
 import DayComponent from "./DayComponent.vue";
 import { workoutStore } from '@/stores/workoutInfo'
-// import { Workout } from '@/models/workout'
+import { Day } from '@/models/day'
 
 import {
   ellipsisHorizontal,
@@ -35,13 +33,12 @@ import {
   pizza,
   settingsOutline,
 } from "ionicons/icons";
-import { modalController, IonButton, IonIcon, IonAccordionGroup } from "@ionic/vue";
+import { modalController, IonButton, IonIcon } from "@ionic/vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
     IonButton,
-    IonAccordionGroup,
     DayComponent,
     IonIcon,
   },
@@ -60,6 +57,15 @@ export default defineComponent({
   methods: {
     closeModal() {
       modalController.dismiss();
+    },
+    addDay() {
+      console.log("add day")
+      this.exerciseSchedule.push(new Day({}))
+      console.log(this.exerciseSchedule[ this.exerciseSchedule.length - 1 ])
+    },
+    cloneDay(index: number) {
+      const selectedExercise = JSON.parse(JSON.stringify(this.exerciseSchedule[index]))
+      this.exerciseSchedule.splice(index, 0, selectedExercise)
     },
     removeDay(index: number) {
       this.exerciseSchedule.splice(index, 1);

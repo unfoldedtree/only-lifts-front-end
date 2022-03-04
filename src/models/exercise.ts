@@ -9,10 +9,10 @@ export class Exercise {
 
 
     constructor(exercise: any) {
-        this.name = exercise?.name ?? "defaultName";
+        this.name = exercise?.name ?? "defaultExerciseName";
         this.success = exercise?.success ?? false;
         this.sets = [];
-        this.incrementScheme = new IncrementScheme();
+        this.incrementScheme = exercise?.incrementScheme ? new IncrementScheme(exercise.incrementScheme) : new IncrementScheme();
 
         if (exercise.sets) {
             exercise.set.forEach((set: any) => {

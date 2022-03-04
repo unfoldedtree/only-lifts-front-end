@@ -1,13 +1,12 @@
 <template>
-  <div class="day-outer">
-    <div class="day-header">
-      <ion-label>{{ componentIndex + 1 }}. </ion-label>
+  <ion-accordion class="day-outer">
+    <ion-item slot="header" class="day-header">
+      <ion-label>Day {{ componentIndex + 1 }}</ion-label>
       <ion-input placeholder="Day Name" :value="componentDay.name"></ion-input>
       <ion-icon @click="$emit('remove-day', componentIndex)" :icon="close" />
       <ion-icon :icon="settingsOutline" />
-      <ion-icon class="expand-btn" :class="expanded ? 'expanded' : ''" @click="expanded = !expanded" :icon="chevronDownOutline" />
-    </div>
-    <div class="day-exercises" :class="expanded ? 'expanded' : ''">
+    </ion-item>
+    <ion-list slot="content" class="day-exercises">
       <draggable
         handle=".handle"
         v-model="componentDay.exercises"
@@ -65,14 +64,14 @@
         <a @click="openAddExercisesModal()">Add Exercise</a>
         <a @click="$emit('clone-day', componentIndex)">Clone Day</a>
       </div>
-    </div>
-  </div>
+    </ion-list>
+  </ion-accordion>
 </template>
 
 <script scoped lang="ts">
 import draggable from "vuedraggable";
 import { Exercise } from "@/models/exercise";
-import AddExercisesComponenet from "./AddExercisesComponent.vue";
+import AddExercisesComponenet from "./AddExercisesComponent.vue"
 import {
   ellipsisHorizontal,
   chevronBackOutline,
@@ -91,6 +90,9 @@ import {
   IonInput,
   IonCheckbox,
   IonLabel,
+  IonAccordion,
+  IonItem,
+  IonList,
   modalController,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
@@ -100,6 +102,9 @@ export default defineComponent({
     IonIcon,
     IonInput,
     IonLabel,
+    IonItem,
+    IonList,
+    IonAccordion,
     draggable,
     IonCheckbox,
   },
@@ -116,14 +121,13 @@ export default defineComponent({
       settingsOutline,
       chevronDownOutline,
       repeatOutline,
-      removeCircleOutline
+      removeCircleOutline,
     };
   },
   data() {
     return {
       componentDay: this.day,
       componentIndex: this.index,
-      expanded: false
     };
   },
   methods: {
@@ -175,19 +179,11 @@ export default defineComponent({
   margin: 0;
   background-color: var(--theme-bg-1);
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 15px;
 }
-/* .day-header ion-label {
-  color: var(--bs-text-muted);
-} */
+.day-header label {
+  margin-right: 7px;
+}
 .day-header ion-icon {
-  color: var(--bs-text-muted);
-  font-size: 150%;
-  cursor: pointer;
   margin-left: 7px;
 }
 .day-utilities {
@@ -204,15 +200,9 @@ export default defineComponent({
   color: #6a64ff !important;
 }
 .day-exercises {
-  transition: all 0.15s;
-  max-height: 0;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   background-color: black !important;
-}
-.day-exercises.expanded {
-    max-height: max-content;
 }
 .exercise-outer {
   margin: 10px;
@@ -233,9 +223,6 @@ export default defineComponent({
   color: #6a64ff;
   padding: 2px;
   font-size: 150%;
-}
-.expand-btn.expanded {
-    transform: rotate(180deg);
 }
 .exercise-workouts {
   margin: 15px 0;
