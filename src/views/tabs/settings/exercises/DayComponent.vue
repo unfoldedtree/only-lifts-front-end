@@ -133,10 +133,19 @@ export default defineComponent({
         cssClass: "fullscreen",
         swipeToClose: false,
       });
-      return modal.present();
+
+      await modal.present()
+
+      const { data } = await modal.onDidDismiss()
+
+      if (data) {
+        data.forEach((name: any) => {
+            this.addExercise(name)
+        })
+      }
     },
-    addExercise() {
-      const newExercise = new Exercise({ name: "Downward Dogs" });
+    addExercise(name: string) {
+      const newExercise = new Exercise({ name: name });
       newExercise.addSet({ reps: 5, weight: 45, amrap: false });
       this.componentDay.exercises.push(newExercise);
     },

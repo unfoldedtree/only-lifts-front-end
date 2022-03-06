@@ -39,6 +39,7 @@ export default defineComponent({
         --theme-dark: #0E0E10;
         --theme-post: #1c1e21;
         --theme-medium: #1C1C1E;
+        --theme-purple: #6a64ff;
         --overflow: auto;
     }
 </style>

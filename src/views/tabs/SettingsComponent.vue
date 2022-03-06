@@ -21,7 +21,7 @@
           <ion-item><ion-label>Select Workout Program</ion-label></ion-item>
           <ion-item><ion-label>Load Additional Workouts</ion-label></ion-item>
           <ion-item><ion-label>Edit Additional Programs</ion-label></ion-item>
-          <ion-item @click="openViewPostModal(BuildProgramComponent)"><ion-label>Build Your Own Program</ion-label></ion-item>
+          <ion-item @click="openViewPostModal('build-program')"><ion-label>Build Your Own Program</ion-label></ion-item>
           <ion-item><ion-label>Edit Workout Program</ion-label></ion-item>
           <ion-item><ion-label>Save Current Workout to Program</ion-label></ion-item>
           <ion-item><ion-label>Export Workout</ion-label></ion-item>
@@ -40,7 +40,7 @@
 
           <ion-item-divider sticky><ion-label>Miscellaneous</ion-label></ion-item-divider>
 
-          <ion-item @click="openViewPostModal(ViewExercisesComponent)"><ion-label>View Exercises</ion-label></ion-item>
+          <ion-item @click="openViewPostModal('view-exercises')"><ion-label>View Exercises</ion-label></ion-item>
           <ion-item><ion-label>Add Exercise</ion-label></ion-item>
           <ion-item><ion-label>View Body-Weights</ion-label></ion-item>
 
@@ -65,20 +65,30 @@
 </template>
 
 <script lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonItemDivider, IonLabel, IonList, modalController } from '@ionic/vue';
-  import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
-  // import ViewExercisesComponent from '@/views/tabs/settings/exercises/ViewExercisesComponent.vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonItemDivider, IonLabel, IonList, modalController } from '@ionic/vue';
+import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
 
   export default defineComponent({
     methods: {
-      async openViewPostModal(modalComponent: any):Promise<any> {
+      async openViewPostModal(hashString: string):Promise<any> {
+        const foundEl = this.settingsReference.filter((it: any) => {
+          return it.hashString == hashString
+        })
+        this.componentName = foundEl[0].component
+
+        location.hash = hashString
         const modal = await modalController
         .create({
-          component: modalComponent,
+          component: this.dynamicComponent,
           cssClass: 'fullscreen',
           swipeToClose: false
         })
-        return modal.present()
+
+        await modal.present()
+
+        await modal.onDidDismiss()
+        location.hash = ''
+        this.componentName = ''
       },
     },
     components: {
@@ -94,8 +104,41 @@
     },
     data() {
       return {
-        ViewExercisesComponent: markRaw(defineAsyncComponent(() => import('@/views/tabs/settings/exercises/ViewExercisesComponent.vue') )),
-        BuildProgramComponent: markRaw(defineAsyncComponent(() => import('@/views/tabs/settings/exercises/BuildProgramComponent.vue') ))
+        componentName: '',
+        settingsReference: [
+          { hashString: 'view-exercises', component: 'ViewExercisesComponent' },
+          { hashString: 'build-program', component: 'BuildProgramComponent' }
+        ],
+      }
+    },
+    computed: {
+      dynamicComponent(): any {
+        if (this.componentName == "") {
+          return null
+        }
+        return markRaw(defineAsyncComponent(() => import(`@/views/tabs/settings/exercises/${this.componentName}.vue`) ))
+      }
+    },
+    mounted() {
+      if (!(location.hash.substr(1) == '')) {
+        try {
+          const hash = location.hash.substr(1);
+          const hashArr = this.settingsReference.map((it: any) => it.hashString)
+          console.log()
+          if (hashArr.indexOf(hash) !== -1) {
+            this.openViewPostModal(hash)
+            return
+          } else {
+            location.hash = ''
+            this.componentName = ''
+          }
+        } catch (err) {
+          location.hash = ''
+          this.componentName = ''
+        }
+      } else {
+        location.hash = ''
+        this.componentName = ''
       }
     }
   });

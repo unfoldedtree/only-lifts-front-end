@@ -36,7 +36,6 @@ import { Workout } from '@/models/workout'
 export default defineComponent({
     data() {
         return {
-            // newSchedule: workoutStore.state.initialSchedule
             newSchedule: this.getNewSchedule()
         }
     },
