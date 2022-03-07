@@ -59,9 +59,7 @@ export default defineComponent({
       modalController.dismiss();
     },
     addDay() {
-      console.log("add day")
       this.exerciseSchedule.push(new Day({}))
-      console.log(this.exerciseSchedule[ this.exerciseSchedule.length - 1 ])
     },
     cloneDay(index: number) {
       const selectedExercise = JSON.parse(JSON.stringify(this.exerciseSchedule[index]))

@@ -8,59 +8,7 @@
       <ion-icon class="expand-btn" :class="expanded ? 'expanded' : ''" @click="expanded = !expanded" :icon="chevronDownOutline" />
     </div>
     <div class="day-exercises" :class="expanded ? 'expanded' : ''">
-      <draggable
-        handle=".handle"
-        v-model="componentDay.exercises"
-        item-key="name"
-        @start="dragging = true"
-        @end="dragging = false"
-      >
-        <template #item="{ element, index }">
-          <div class="exercise-outer">
-            <div class="exercise-header">
-              <ion-icon class="handle" :icon="repeatOutline" />
-              <label>{{ index + 1 }}. {{ element.name }}</label>
-              <ion-icon
-                @click="removeExercise(index)"
-                :icon="removeCircleOutline"
-              />
-            </div>
-            <div class="exercise-workouts">
-              <table>
-                <tr>
-                  <th class="remove-set"></th>
-                  <th>#</th>
-                  <th>Reps</th>
-                  <th>Weight</th>
-                  <th>AMRAP</th>
-                </tr>
-                <tr v-for="(set, setIndex) in element.sets" v-bind:key="set.id">
-                  <th class="remove-set">
-                    <ion-icon
-                      @click="removeSet(element, index, setIndex)"
-                      :icon="removeCircleOutline"
-                    />
-                  </th>
-                  <th>{{ setIndex + 1 }}</th>
-                  <th>{{ set.reps }}</th>
-                  <th>{{ set.weight }}</th>
-                  <th class="amrap">
-                    <ion-checkbox
-                      color="tertiary"
-                      :modelValue="set.amrap"
-                      @update:modelValue="set.amrap = $event"
-                    ></ion-checkbox>
-                  </th>
-                </tr>
-              </table>
-            </div>
-            <div class="exercise-footer">
-              <a @click="addSet(element)">Add Set</a>
-              <a @click="cloneExercise(setIndex)">Clone Exercise</a>
-            </div>
-          </div>
-        </template>
-      </draggable>
+      <day-exercises-component v-bind:componentDay="componentDay"></day-exercises-component>
       <div class="day-utilities">
         <a @click="openAddExercisesModal()">Add Exercise</a>
         <a @click="$emit('clone-day', componentIndex)">Clone Day</a>
@@ -70,9 +18,9 @@
 </template>
 
 <script scoped lang="ts">
-import draggable from "vuedraggable";
 import { Exercise } from "@/models/exercise";
 import AddExercisesComponenet from "./AddExercisesComponent.vue";
+import DayExercisesComponent from "./DayExercisesComponent.vue";
 import {
   ellipsisHorizontal,
   chevronBackOutline,
@@ -89,7 +37,6 @@ import {
 import {
   IonIcon,
   IonInput,
-  IonCheckbox,
   IonLabel,
   modalController,
 } from "@ionic/vue";
@@ -100,8 +47,7 @@ export default defineComponent({
     IonIcon,
     IonInput,
     IonLabel,
-    draggable,
-    IonCheckbox,
+    DayExercisesComponent
   },
   props: ["day", "index"],
   setup() {
@@ -148,28 +94,6 @@ export default defineComponent({
       const newExercise = new Exercise({ name: name });
       newExercise.addSet({ reps: 5, weight: 45, amrap: false });
       this.componentDay.exercises.push(newExercise);
-    },
-    cloneExercise(index: number) {
-      const selectedExercise = JSON.parse(
-        JSON.stringify(this.componentDay.exercises[index])
-      );
-      this.componentDay.exercises.splice(index, 0, selectedExercise);
-    },
-    removeExercise(index: number) {
-      this.componentDay.exercises.splice(index, 1);
-    },
-    addSet(exercise: Exercise) {
-      const prevSet = JSON.parse(
-        JSON.stringify(exercise.sets[exercise.sets.length - 1])
-      );
-      exercise.sets.push(prevSet);
-    },
-    removeSet(exercise: Exercise, index: number, setIndex: number) {
-      exercise.sets.splice(setIndex, 1);
-
-      if (exercise.sets.length == 0) {
-        this.componentDay.exercises.splice(index, 1);
-      }
     },
   },
 });
@@ -222,63 +146,5 @@ export default defineComponent({
 }
 .day-exercises.expanded {
     max-height: max-content;
-}
-.exercise-outer {
-  margin: 10px;
-  padding: 10px;
-  background-color: var(--theme-bg-1);
-  border-radius: 5px;
-}
-.exercise-header {
-  display: flex;
-  align-items: center;
-}
-.exercise-header label {
-  margin-left: 7px;
-  flex: 1;
-}
-.exercise-header ion-icon {
-  cursor: pointer;
-  color: #6a64ff;
-  padding: 2px;
-  font-size: 150%;
-}
-.expand-btn.expanded {
-    transform: rotate(180deg);
-}
-.exercise-workouts {
-  margin: 15px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.exercise-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.exercise-footer a {
-  cursor: pointer;
-  color: #6a64ff;
-  margin: 7px;
-}
-th {
-  padding: 5px 15px;
-  border: 2px solid black;
-  min-width: 50px;
-  font-weight: 400;
-}
-th.remove-set {
-  cursor: pointer;
-  border: 0;
-  padding: 0 15px;
-  color: red;
-}
-th.amrap {
-  width: 20px;
-}
-ion-checkbox {
-  --size: 30%;
 }
 </style>

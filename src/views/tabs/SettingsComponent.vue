@@ -76,7 +76,9 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
         })
         this.componentName = foundEl[0].component
 
-        location.hash = hashString
+        this.$router.replace({
+          query: { view: hashString },
+        });
         const modal = await modalController
         .create({
           component: this.dynamicComponent,
@@ -87,7 +89,7 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
         await modal.present()
 
         await modal.onDidDismiss()
-        location.hash = ''
+        this.$router.push(this.$route.path);
         this.componentName = ''
       },
     },
@@ -120,25 +122,24 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
       }
     },
     mounted() {
-      if (!(location.hash.substr(1) == '')) {
+      if (this.$route.query.view) {
         try {
-          const hash = location.hash.substr(1);
+          const hash = this.$route.query.view.toString();
           const hashArr = this.settingsReference.map((it: any) => it.hashString)
-          console.log()
           if (hashArr.indexOf(hash) !== -1) {
             this.openViewPostModal(hash)
             return
           } else {
             location.hash = ''
-            this.componentName = ''
+            this.$router.push(this.$route.path);
           }
         } catch (err) {
           location.hash = ''
-          this.componentName = ''
+          this.$router.push(this.$route.path);
         }
       } else {
         location.hash = ''
-        this.componentName = ''
+        this.$router.push(this.$route.path);
       }
     }
   });
