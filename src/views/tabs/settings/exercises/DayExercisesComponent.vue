@@ -47,7 +47,7 @@
         </div>
         <div class="exercise-footer">
           <a @click="addSet(element)">Add Set</a>
-          <a @click="cloneExercise(setIndex)">Clone Exercise</a>
+          <a @click="cloneExercise(index)">Clone Exercise</a>
         </div>
       </div>
     </template>
@@ -78,22 +78,22 @@ export default defineComponent({
       IonCheckbox,
       draggable
   },
-  props: ["componentDay"],
-    setup() {
-    return {
-      thumbsUp,
-      mail,
-      ellipsisHorizontal,
-      chevronBackOutline,
-      send,
-      close,
-      pizza,
-      settingsOutline,
-      chevronDownOutline,
-      repeatOutline,
-      removeCircleOutline
-    };
+  setup() {
+      return {
+        ellipsisHorizontal,
+        chevronBackOutline,
+        thumbsUp,
+        mail,
+        send,
+        close,
+        pizza,
+        settingsOutline,
+        chevronDownOutline,
+        repeatOutline,
+        removeCircleOutline,
+      }
   },
+  props: ["componentDay"],
   data() {
       return {
           day: this.componentDay

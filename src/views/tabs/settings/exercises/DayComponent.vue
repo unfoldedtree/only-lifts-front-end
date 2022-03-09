@@ -19,7 +19,7 @@
 
 <script scoped lang="ts">
 import { Exercise } from "@/models/exercise";
-import AddExercisesComponenet from "./AddExercisesComponent.vue";
+import AddExercisesComponent from "./AddExercisesComponent.vue";
 import DayExercisesComponent from "./DayExercisesComponent.vue";
 import {
   ellipsisHorizontal,
@@ -75,7 +75,7 @@ export default defineComponent({
   methods: {
     async openAddExercisesModal(): Promise<any> {
       const modal = await modalController.create({
-        component: AddExercisesComponenet,
+        component: AddExercisesComponent,
         cssClass: "fullscreen",
         swipeToClose: false,
       });

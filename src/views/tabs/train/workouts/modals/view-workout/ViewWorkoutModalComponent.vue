@@ -1,11 +1,6 @@
 <template>
   <div class="workout-modal-container">
     <div class="workout-outer-div">
-      <div class="rest-timer">
-        <div class="timer">{{ restTimer }}</div>
-        <div class="close-timer">x</div>
-      </div>
-
       <div class="workout-upper-details">
         <div class="modal-back-button" @click="closeModal()">
           <ion-icon :icon="chevronBackOutline" />
@@ -44,7 +39,7 @@
               :icon="checkmarkOutline"
             />
           </div>
-          <div class="weight-change-div" @click="presentAlertPrompt(exercise)">
+          <div class="weight-change-div">
             <ion-icon :icon="ellipsisVertical" />
           </div>
         </div>
@@ -77,9 +72,7 @@
           FINISH WORKOUT
         </div>
         <div class="workout-modifications">
-          <div @click="openAddExercisesModal()" class="workout-add-exercise">
-            ADD EXERCISE
-          </div>
+          <div @click="cancelWorkout()">CANCEL WORKOUT</div>  
           <div @click="openEditExercisesModal()" class="workout-edit-exercises">EDIT EXERCISES</div>
         </div>
       </div>
@@ -93,65 +86,25 @@ import {
   ellipsisHorizontal,
   chevronBackOutline,
   checkmarkOutline,
-  ellipsisVertical,
+  ellipsisVertical
 } from "ionicons/icons";
-import { modalController, IonIcon, alertController } from "@ionic/vue";
+import { modalController, IonIcon } from "@ionic/vue";
 import { timerStore } from "@/stores/timer";
 import { workoutStore } from "@/stores/workoutInfo";
-import { Exercise } from "@/models/exercise";
 
 export default defineComponent({
   components: {
     IonIcon,
   },
   methods: {
-    async presentAlertPrompt(exercise) {
-      const input_options = [];
-
-      // exercise.sets.forEach((set, index) => {
-      //     input_options.push({
-      //         label: `Set ${index + 1}`,
-      //         name: `set_${index}`,
-      //         type: 'number',
-      //         value: set.weight,
-      //         placeholder: `Enter set ${index + 1} weight here...`
-      //     })
-      // })
-
-      input_options.push({
-        label: `Set Weight`,
-        name: `set`,
-        type: "number",
-        value: exercise.sets[0].weight,
-        placeholder: `Enter set weight here...`,
-      });
-
-      const alert = await alertController.create({
-        header: `Edit ${exercise.name}`,
-        inputs: input_options,
-        buttons: [
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-          },
-          {
-            text: "Ok",
-            handler: (event) => {
-              // exercise.sets.forEach((set, index) => {
-              //     set.weight = Number(event[`set_${index}`])
-              // })
-              exercise.sets.forEach((set) => {
-                set.weight = Number(event[`set`]);
-              });
-            },
-          },
-        ],
-      });
-      return alert.present();
-    },
     closeModal() {
       modalController.dismiss();
+    },
+    cancelWorkout() {
+        workoutStore.commit("clearWorkouts");
+        timerStore.commit("resetWorkoutTime");
+        timerStore.commit("resetRestTime");
+        modalController.dismiss();
     },
     async openEditExercisesModal() {
         const modal = await modalController.create({
@@ -164,29 +117,13 @@ export default defineComponent({
         });
 
         await modal.present()
-    },
-    async openAddExercisesModal() {
-      const modal = await modalController.create({
-        component: this.addExerciseComponent,
-        cssClass: "fullscreen",
-        swipeToClose: false,
-      });
 
-      await modal.present();
+        const { data } = await modal.onDidDismiss()
 
-      const { data } = await modal.onDidDismiss();
-
-      if (data) {
-        data.forEach((name) => {
-          this.addExercise(name);
-        });
-      }
-    },
-    addExercise(name) {
-      const newExercise = new Exercise({ name: name });
-      newExercise.addSet({ reps: 5, weight: 45, amrap: false });
-      this.sessionWorkout.exercises.push(newExercise);
-      this.workout.exercises.push(newExercise);
+        if (data && data.day) {
+            this.sessionWorkout = data.day
+            this.workout = data.day
+        }
     },
     startTimer() {
       if (!timerStore.state.workoutTimestamp) {
@@ -248,11 +185,6 @@ export default defineComponent({
       ellipsisHorizontal,
       ellipsisVertical,
       checkmarkOutline,
-      addExerciseComponent: markRaw(
-        defineAsyncComponent(() =>
-          import('@/views/tabs/settings/exercises/AddExercisesComponent.vue')
-        )
-      ),
       editExercisesComponent: markRaw(
           defineAsyncComponent(() => 
             import('./EditExercisesComponent.vue')  
@@ -263,12 +195,6 @@ export default defineComponent({
   computed: {
     formattedTimer() {
       return timerStore.state.workoutTimerCurrent;
-    },
-    restTimer() {
-      // if ((timerStore.state.restTimerCurrent == restAmount) && (timerStore.state.restTimerCurrent != 0)) {
-      //     alert("Move on to the next set")
-      // }
-      return timerStore.state.restTimerCurrent;
     },
   },
   mounted() {
@@ -461,26 +387,5 @@ export default defineComponent({
 }
 .workout-modifications div {
     cursor: pointer;
-}
-.rest-timer {
-  position: absolute;
-  z-index: 500000;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  right: 10px;
-  top: 12px;
-  background-color: crimson;
-  height: 30px;
-  width: 110px;
-  border-radius: 25px;
-  padding: 5px 10px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
-}
-.timer {
-  flex: 1;
-  display: flex;
-  justify-content: center;
 }
 </style>
