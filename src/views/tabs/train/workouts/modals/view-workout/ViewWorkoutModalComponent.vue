@@ -35,7 +35,6 @@
           <div class="exercise-name">
             {{ exercise.name }}
             <ion-icon
-              :class="exercise.success ? 'show' : ''"
               :icon="checkmarkOutline"
             />
           </div>

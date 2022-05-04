@@ -66,6 +66,7 @@ export default defineComponent({
 
       return filteredExercises;
     },
+
     toggleExercise(name: string, toggled: boolean) {
       if (toggled) {
         if (this.selectedExercises.indexOf(name) === -1) {
@@ -85,7 +86,7 @@ export default defineComponent({
     return {
       exerciseJson: exercise_data,
       filterValue: "",
-      selectedExercises: [],
+      selectedExercises: [] as any,
     };
   },
 });
