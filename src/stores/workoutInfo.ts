@@ -10,6 +10,7 @@ export const workoutStore = createStore({
       initialSchedule: [],
       rollingSchedule: [],
       recentCycle: [],
+      workoutHistory: [],
       currentWorkout: null,
       sessionWorkout: null
     }
@@ -18,31 +19,62 @@ export const workoutStore = createStore({
     prepareWorkoutData(state: any) {
       const authUser = Workout.getUserData();
       const activeProgram: any = Workout.getActiveProgram(authUser);
-      // console.log("Active Program: ", activeProgram);
       const relevantWorkouts = Workout.getRelevantHistory(authUser, activeProgram);
-      // console.log("Relevant Workout History: ", relevantWorkouts);
-      const recentCycle = Workout.getRecentCycle(activeProgram, relevantWorkouts);
-      // console.log("Recent Cycle: ", recentCycle);
+      const relevantCycle = Workout.getRecentCycle(activeProgram, relevantWorkouts);
 
-      // let workoutData;
-      // if (sessionStorage.workout_data) {
-      //   workoutData = JSON.parse(sessionStorage.workout_data)
-      // } else {
-      //   workoutData = workout_data
-      //   sessionStorage.workout_data = JSON.stringify(workout_data)
-      // }
-      //
-      // state.workouts = workoutData
-      // state.initialSchedule = workoutData[0].schedule
-      // state.rollingSchedule = workoutData[0].schedule
+      let workoutHistory;
+      if (sessionStorage.workout_history) {
+        workoutHistory = JSON.parse(sessionStorage.workout_history)
+      } else {
+        workoutHistory = authUser.workoutHistory;
+        sessionStorage.workout_history = JSON.stringify(authUser.workoutHistory);
+      }
 
-      state.workouts = activeProgram;
-      state.initialSchedule = activeProgram.schedule;
-      state.rollingSchedule = state.initialSchedule;
+      let workoutData;
+      if (sessionStorage.workout_data) {
+        workoutData = JSON.parse(sessionStorage.workout_data)
+      } else {
+        workoutData = activeProgram
+        sessionStorage.workout_data = JSON.stringify(activeProgram)
+      }
+
+      let rollingSchedule;
+      if (sessionStorage.rolling_schedule) {
+        rollingSchedule = JSON.parse(sessionStorage.rolling_schedule)
+      } else {
+        rollingSchedule = workoutData.schedule;
+        sessionStorage.rolling_schedule = JSON.stringify(workoutData.schedule);
+      }
+
+      let recentCycle;
+      if (sessionStorage.recent_cycle) {
+        recentCycle = JSON.parse(sessionStorage.recent_cycle)
+      } else {
+        recentCycle = relevantCycle;
+        sessionStorage.recent_cycle = JSON.stringify(relevantCycle);
+      }
+
+      //TODO in workout.ts make recent cycle update in "completeWorkout"
+
+      console.log("Rolling Schedule: ", rollingSchedule)
+
+      state.workouts = workoutData;
+      state.initialSchedule = workoutData.schedule;
+      state.rollingSchedule = rollingSchedule;
       state.recentCycle = recentCycle;
+      state.workoutHistory = workoutHistory;
     },
     setRollingSchedule(state: any, schedule: any) {
       state.rollingSchedule = schedule
+      sessionStorage.rolling_schedule = JSON.stringify(schedule);
+    },
+    setRecentCycle(state: any, cycle: any) {
+      state.recentCycle = cycle
+      sessionStorage.recent_cycle = JSON.stringify(cycle);
+    },
+    setWorkoutHistory(state: any, workout: any) {
+      state.workoutHistory.push(workout);
+      sessionStorage.workout_history = JSON.stringify(state.workoutHistory);
     },
     setCurrentWorkout(state: any, workout: any) {
       state.currentWorkout = workout;

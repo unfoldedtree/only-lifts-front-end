@@ -86,6 +86,7 @@ export default defineComponent({
           this.newSchedule,
           workoutStore.state.currentWorkout
         );
+        workoutStore.commit("setRollingSchedule", this.newSchedule);
         workoutStore.commit("clearWorkouts");
       }
     },

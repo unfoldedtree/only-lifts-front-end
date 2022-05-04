@@ -61,9 +61,10 @@ export default defineComponent({
   --overflow: auto;
 }
 .rest-timer {
+  /*display: flex;*/
+  display: none;
   position: absolute;
   z-index: 500000;
-  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
