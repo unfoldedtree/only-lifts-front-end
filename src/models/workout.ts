@@ -1,6 +1,7 @@
 import user_data from "../../public/dev-data/user/user-data.json";
 import workout_data from "../../public/dev-data/workouts/workout-data-starter.json";
 import {workoutStore} from "@/stores/workoutInfo";
+import {timerStore} from "@/stores/timer";
 
 export class Workout {
     public static getUserData() {
@@ -84,10 +85,7 @@ export class Workout {
     }
 
     public static completeWorkout(schedule: any, workout: any) {
-        workout.finishedTimestamp = Date.now();
-
         const recentCycle = workoutStore.state.recentCycle;
-
         recentCycle.push(workout);
 
         if (recentCycle.length > schedule.length) {

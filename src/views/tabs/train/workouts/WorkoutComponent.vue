@@ -46,6 +46,7 @@ import ViewWorkoutModalComponent from "./modals/view-workout/ViewWorkoutModalCom
 import { workoutStore } from "@/stores/workoutInfo";
 import { Workout } from "@/models/workout";
 import { checkmarkCircleOutline } from "ionicons/icons";
+import {timerStore} from "@/stores/timer";
 
 export default defineComponent({
   components: {
@@ -82,10 +83,14 @@ export default defineComponent({
       location.hash = "";
 
       if (data == "success") {
+        workoutStore.state.currentWorkout.finishedTimestamp = Date.now();
+        workoutStore.state.currentWorkout.startTimestamp = +timerStore.state.workoutTimestamp;
         this.newSchedule = Workout.completeWorkout(
           this.newSchedule,
           workoutStore.state.currentWorkout
         );
+        timerStore.commit("resetWorkoutTime");
+        timerStore.commit("resetRestTime");
         workoutStore.commit("setRollingSchedule", this.newSchedule);
         workoutStore.commit("clearWorkouts");
       }

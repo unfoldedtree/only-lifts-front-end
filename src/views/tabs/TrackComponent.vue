@@ -7,7 +7,7 @@
     </ion-header>
     <ion-content>
       <calendar-view
-          :items="historyItems"
+          :items="getHistoryItems"
           :show-date="showDate"
           @click-item="clickItem"
       >
@@ -23,14 +23,13 @@
 </template>
 
 <script>
-  import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, modalController} from '@ionic/vue';
+  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, modalController } from '@ionic/vue';
   import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
   import { defineComponent } from 'vue';
   import "../../../../myApp/node_modules/vue-simple-calendar/dist/style.css";
   import "../../../../myApp/node_modules/vue-simple-calendar/static/css/default.css"
-  import {workoutStore} from "@/stores/workoutInfo";
+  import { workoutStore } from "@/stores/workoutInfo";
   import PastWorkoutModalComponent from "@/views/tabs/train/workouts/modals/view-workout/PastWorkoutModalComponent";
-  import {Workout} from "@/models/workout";
 
   export default defineComponent({
     components: {
@@ -44,12 +43,16 @@
     },
     data: function() {
       return {
-        showDate: new Date(),
-        historyItems: workoutStore.state.workoutHistory.map((it) => {
+        showDate: new Date()
+      }
+    },
+    computed: {
+      getHistoryItems: function () {
+        return workoutStore.state.workoutHistory.map((it) => {
           return {
             id: it._id,
             title: it._id,
-            startDate: new Date(it.finishedTimestamp)
+            startDate: new Date(+it.finishedTimestamp)
           }
         })
       }
@@ -130,20 +133,19 @@
     padding: 6px 12px;
   }
 
-  .cv-day.hasItems {
-    background-color: red !important;
-  }
-
   .cv-day.today {
-    background-color: var(--theme-purple) !important;
+    background-color: var(--bs-text-muted) !important;
   }
 
-  .outsideOfMonth {
+  .cv-day.outsideOfMonth {
     background-color: var(--theme-bg-1) !important;
   }
 
+  .cv-day.hasItems {
+    background-color: var(--theme-purple) !important;
+  }
+
   .cv-item {
-    /*display: none;*/
     top: 0 !important;
     height: 100%;
     opacity: 0;

@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 
-function formatTime(time: any) {
+export function formatTime(time: any) {
     let minutes: any = Math.floor(time / 60) % 60;
     let hours: any = Math.floor(time / 3600) % 60;
     let seconds: any = time % 60;
@@ -33,7 +33,7 @@ export const timerStore = createStore({
   },
   mutations: {
     setWorkoutTimeStamp(state: any) {
-        state.workoutTimestamp = new Date()
+        state.workoutTimestamp = Date.now()
     },
     resetWorkoutTime(state: any) {
         state.workoutTimestamp = null
@@ -44,12 +44,12 @@ export const timerStore = createStore({
     setWorkoutInterval(state: any) {
         state.workoutInterval = setInterval(() => {
             const tempDate = new Date()
-            const timeCalc = Math.floor((+tempDate - +state.workoutTimestamp) / 1000)
+            const timeCalc = Math.floor((+tempDate - +(new Date(state.workoutTimestamp))) / 1000)
             state.workoutTimerCurrent = formatTime(+timeCalc)
         }, 1000)
     },
     setRestTimeStamp(state: any) {
-        state.restTimestamp = new Date()
+        state.restTimestamp = Date.now()
     },
     resetRestTime(state: any) {
         state.restTimestamp = null
@@ -60,7 +60,7 @@ export const timerStore = createStore({
     setRestInterval(state: any) {
         state.restInterval = setInterval(() => {
             const tempDate = new Date()
-            const timeCalc = Math.floor((+tempDate - +state.restTimestamp) / 1000)
+            const timeCalc = Math.floor((+tempDate - +(new Date(state.restTimestamp))) / 1000)
             state.restTimerCurrent = formatTime(+timeCalc)
         }, 1000)
     }

@@ -17,7 +17,7 @@
 
       <div class="duration-div">
         <div class="lifted">
-          <div class="lifted-amount">0</div>
+          <div class="lifted-amount">{{ weightLifted }}</div>
           <div class="lifted-label">LB LIFTED</div>
         </div>
         <div class="duration">
@@ -137,6 +137,7 @@ export default defineComponent({
     handleRepClick(event, exercise, index, exerciseIndex) {
       this.checkSetSuccess(event, exercise, index, exerciseIndex);
       this.checkExerciseSuccess(exercise);
+      this.getLifted();
     },
     checkSetSuccess(event, exercise, index, exerciseIndex) {
       const originalReps =
@@ -161,6 +162,10 @@ export default defineComponent({
         timerStore.commit("resetRestTime");
       }
     },
+    getLifted() {
+      const sum = this.sessionWorkout.exercises.map(it => { return it.sets.flatMap(a => a.completed ? (a.weight * a.reps) : 0) }).flat(2).reduce((a, b) => a + b, 0);
+      this.weightLifted = sum;
+    },
     checkExerciseSuccess(exercise) {
       if (exercise.sets.filter((it) => it.completed == false).length == 0) {
         exercise.success = true;
@@ -171,8 +176,6 @@ export default defineComponent({
     submitWorkout() {
       this.sessionWorkout.status = "completed";
       workoutStore.commit("submitWorkout");
-      timerStore.commit("resetWorkoutTime");
-      timerStore.commit("resetRestTime");
       modalController.dismiss("success");
     },
   },
@@ -180,6 +183,7 @@ export default defineComponent({
     return {
       workout: workoutStore.state.currentWorkout,
       sessionWorkout: workoutStore.state.sessionWorkout,
+      weightLifted: 0,
       chevronBackOutline,
       ellipsisHorizontal,
       ellipsisVertical,

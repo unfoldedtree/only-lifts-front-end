@@ -17,11 +17,11 @@
 
       <div class="duration-div">
         <div class="lifted">
-          <div class="lifted-amount">0</div>
+          <div class="lifted-amount">{{ getLifted() }}</div>
           <div class="lifted-label">LB LIFTED</div>
         </div>
         <div class="duration">
-          <div class="duration-amount">{{ formattedTimer }}</div>
+          <div class="duration-amount">{{ getDuration() }}</div>
           <div class="duration-label">DURATION</div>
         </div>
       </div>
@@ -78,8 +78,7 @@ import {
   ellipsisVertical
 } from "ionicons/icons";
 import { modalController, IonIcon } from "@ionic/vue";
-import { timerStore } from "@/stores/timer";
-import { workoutStore } from "@/stores/workoutInfo";
+import { formatTime } from "@/stores/timer";
 
 export default defineComponent({
   components: {
@@ -89,6 +88,17 @@ export default defineComponent({
   methods: {
     closeModal() {
       modalController.dismiss();
+    },
+    getDuration() {
+      if (this.pastWorkout.startTimestamp && this.pastWorkout.finishedTimestamp) {
+        return formatTime(Math.floor((this.pastWorkout.finishedTimestamp - this.pastWorkout.startTimestamp) / 1000))
+      } else {
+        return "00:00:00";
+      }
+    },
+    getLifted() {
+      const sum = this.pastWorkout.exercises.map(it => { return it.sets.flatMap(a => a.weight * a.reps) }).flat(2).reduce((a, b) => a + b, 0)
+      return sum;
     }
   },
   data() {
