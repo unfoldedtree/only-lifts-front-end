@@ -5,28 +5,21 @@
             <div class="modal-back-button" @click="closeModal()">
                 <ion-icon :icon="close" />
             </div>
-            <div>Create Post</div>
-            <div class="create-post-submit" @click="buildPost()">
+            <div>New Conversation</div>
+            <div class="create-post-submit" @click="buildMessage()">
                 <ion-icon :icon="send" />
             </div>
         </div>
         
         <div class="post-content">
-            <div class="post-content-header">
-                <div class="post-profile-pic">
-                    <div class="post-profile-image"></div>
-                </div>
-                <div class="post-profile-user-info">
-                    <div>William McMahan</div>
-                </div>
-                <div class="post-options">
-                    <div class="post-options-button">
-                        <ion-icon class="post-options-button" :icon="ellipsisHorizontal" />
-                    </div>
-                </div>
+          <div class="post-recipients">
+            <div class="post-to">To</div>
+            <div class="to-user-array">
+              <div class="to-user" v-for="user in recipients" :key="user.id">{{ user.name }}</div>
             </div>
+          </div>
 
-            <ion-textarea auto-grow placeholder="What progress did you make today?" v-model="postContent"></ion-textarea>
+            <ion-textarea auto-grow placeholder="What would you like to say?" v-model="messageContent"></ion-textarea>
         </div>
 
     </div>
@@ -53,21 +46,24 @@
           close
       };
     },
+    props: ["recipients"],
     data() {
       return {
-        postContent: ""
+        messageContent: ""
       }
     },
     methods: {
       closeModal() {
         modalController.dismiss()
       },
-      buildPost() {
-        const postObj = {
-          content: this.postContent
+      buildMessage() {
+        const messageObj = {
+          id: Date.now(),
+          send: Date.now(),
+          content: this.messageContent,
+          recipients: this.recipients.map((it: any) => it.id)
         }
-        const post = new Post(postObj)
-        modalController.dismiss(post)
+        modalController.dismiss(messageObj)
       }
     }
   });
@@ -102,6 +98,29 @@
         align-items: center;
         font-size: 150%;
         cursor: pointer;
+    }
+    .post-recipients {
+      display: flex;
+      align-items: center;
+      padding: 10px 10px 0 10px;
+    }
+    .post-to {
+      padding-right: 10px;
+      padding-bottom: 10px;
+    }
+    .to-user-array {
+      padding-bottom: 10px;
+      display: flex;
+      flex: 1;
+      overflow: auto;
+    }
+    .to-user {
+      white-space: nowrap;
+      font-size: 75%;
+      margin: 5px;
+      padding: 5px 8px;
+      border-radius: 25px;
+      background-color: var(--theme-purple);
     }
     .post-upper-details {
         padding: 15px;
@@ -167,7 +186,7 @@
         color: var(--bs-gray-base);
     }
     ion-textarea {
-        margin-top: 10px;
+        /*margin-top: 10px;*/
         padding: 0 10px;
     }
 </style>

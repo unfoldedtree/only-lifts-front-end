@@ -9,7 +9,7 @@
       <div id="post-container">
           <post-component v-for="post in filteredPosts" v-bind:key="post.id" v-bind:post="post" />
       </div>
-      <social-new-button-component />
+      <social-new-button-component @create-post="createPost" />
     </ion-content>
   </ion-page>
 </template>
@@ -20,6 +20,7 @@
   import { defineComponent } from 'vue';
   import SocialNewButtonComponent from '@/views/tabs/social/SocialNewButtonComponent.vue';
   import PostComponent from './social/posts/PostComponent.vue';
+  import {Post} from "@/models/post";
 
   export default defineComponent({
     components: {
@@ -37,18 +38,17 @@
     data() {
       return {
         userJson: user_data,
-        filteredPosts: {}
+        filteredPosts: [{}]
       }
     },
     methods: {
       extractPosts() {
         const posts = this.userJson.map(({ posts }) => posts).flat()
-        const filteredPosts = posts.flat().sort((a, b) => this.dateStringToNumber(b.postDate) - this.dateStringToNumber(a.postDate))
+        const filteredPosts = posts.flat().sort((a, b) => b.postDate - a.postDate)
         this.filteredPosts = filteredPosts
       },
-      dateStringToNumber(dateString: string) {
-        const dateArray = dateString.split(/[\sT]+/)
-        return Date.parse(`${dateArray[0]} ${dateArray[1]}`);
+      createPost(post: Post) {
+        this.filteredPosts.unshift(post)
       }
     },
     beforeMount() {

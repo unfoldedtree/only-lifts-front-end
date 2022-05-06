@@ -26,8 +26,11 @@
             cssClass: 'fullscreen',
             swipeToClose: false
           })
-          return modal.present()
-        },
+          await modal.present()
+
+        const { data } = await modal.onDidDismiss()
+        this.$emit("create-post", data)
+      },
     },
     setup() {
       return {

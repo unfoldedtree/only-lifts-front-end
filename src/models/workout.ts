@@ -5,13 +5,16 @@ import {timerStore} from "@/stores/timer";
 
 export class Workout {
     public static getUserData() {
-        const user = user_data.filter((it: any) => it._id === "61f9f4ca6fa95c5a635dc017")[0]
+        const user = user_data[0]
         return user;
     }
 
     public static getActiveProgram(user: any) {
-        const activeProgram = workout_data.filter((it: any) =>  it._id === user.currentWorkoutProgramId)[0];
-        return activeProgram;
+        if (user.currentWorkoutProgramId) {
+            return workout_data.filter((it: any) =>  it._id === user.currentWorkoutProgramId)[0];
+        } else {
+            return null;
+        }
     }
 
     public static getRelevantHistory(user: any, activeProgram: any) {

@@ -5,28 +5,23 @@
             <div class="modal-back-button" @click="closeModal()">
                 <ion-icon :icon="close" />
             </div>
-            <div>Create Post</div>
-            <div class="create-post-submit" @click="buildPost()">
+            <div>New Conversation</div>
+            <div class="create-post-submit" @click="continueProcess()">
                 <ion-icon :icon="send" />
             </div>
         </div>
         
         <div class="post-content">
-            <div class="post-content-header">
-                <div class="post-profile-pic">
-                    <div class="post-profile-image"></div>
-                </div>
-                <div class="post-profile-user-info">
-                    <div>William McMahan</div>
-                </div>
-                <div class="post-options">
-                    <div class="post-options-button">
-                        <ion-icon class="post-options-button" :icon="ellipsisHorizontal" />
-                    </div>
-                </div>
+            <ion-item>
+              <ion-label position="floating">To</ion-label>
+              <ion-input clear-input="true" v-model="filterText" @ionChange="filterUsers"></ion-input>
+            </ion-item>
+            <div class="to-user-array">
+              <div class="to-user" v-for="user in addArray" :key="user.id">{{ user.name }}</div>
             </div>
-
-            <ion-textarea auto-grow placeholder="What progress did you make today?" v-model="postContent"></ion-textarea>
+            <div class="to-user-container">
+              <ToUserComponent v-for="user in filteredUsers" :key="user.id" :inList="addArray.includes(user)" :user="user" @click="addUser(user)" />
+            </div>
         </div>
 
     </div>
@@ -34,14 +29,18 @@
 
 <script lang="ts">
   import { ellipsisHorizontal, chevronBackOutline, thumbsUp, mail, send, close } from 'ionicons/icons';
-  import { IonIcon, modalController, IonTextarea } from '@ionic/vue';
+  import {IonIcon, modalController, IonInput, IonLabel, IonItem} from '@ionic/vue';
   import { defineComponent } from 'vue';
   import { Post } from "@/models/post";
+  import ToUserComponent from "@/views/tabs/talk/messages/modals/new-message/ToUserComponent.vue";
 
   export default defineComponent({
     components: {
         IonIcon,
-        IonTextarea
+        IonInput,
+        IonLabel,
+        IonItem,
+        ToUserComponent
     },
     setup() {
       return {
@@ -53,21 +52,31 @@
           close
       };
     },
+    props: ["users"],
     data() {
       return {
-        postContent: ""
+        filterText: "",
+        postContent: "",
+        addArray: [] as any[],
+        filteredUsers: this.users,
       }
     },
     methods: {
       closeModal() {
         modalController.dismiss()
       },
-      buildPost() {
-        const postObj = {
-          content: this.postContent
+      addUser(user: any) {
+        if (this.addArray.includes(user)) {
+          this.addArray.splice(this.addArray.indexOf(user), 1)
+        } else {
+          this.addArray.push(user)
         }
-        const post = new Post(postObj)
-        modalController.dismiss(post)
+      },
+      filterUsers() {
+        this.filteredUsers = this.users.filter((it: any) => it.name.toLowerCase().includes(this.filterText.toLowerCase()))
+      },
+      continueProcess() {
+        modalController.dismiss(this.addArray)
       }
     }
   });
@@ -85,6 +94,8 @@
         --theme-dark: #0E0E10;
         --theme-post: #1c1e21;
         --theme-medium: #1C1C1E;
+        --padding-start: 18px;
+        --padding-end: 18px;
     }
     .post-outer-div {
         margin: 0 auto;
@@ -93,7 +104,8 @@
         width: 100%;
         height: 100%;
         max-width: 800px;
-        background-color: var(--theme-bg-1);
+        /*background-color: var(--theme-bg-1);*/
+        background-color: #000000;
     }
     .modal-back-button {
         color: var(--bs-gray-base);
@@ -120,51 +132,19 @@
         justify-content: center;
         align-items: center;
     }
-    .post-options-button {
-        cursor: pointer;
+    .to-user-array {
+      padding: 10px 12px;
+      display: flex;
+      flex: 1;
+      overflow: auto;
     }
-    .post-content {
-        padding-top: 10px;
-    }
-    .post-content-header {
-        padding: 0 15px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    .post-profile-pic {
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-    }
-    .post-profile-image {
-        border-radius: 50%;
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background-color: whitesmoke;
-    }
-    .post-profile-user-info {
-        color: var(--primary-text);
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        height: 100%;
-        margin: 7px 14px 7px 7px;
-    }
-    .post-options {
-        display: flex;
-        flex: 1;
-        justify-content: flex-end;
-        align-items: flex-start;
-        color: var(--bs-gray-base);
+    .to-user {
+      white-space: nowrap;
+      font-size: 75%;
+      margin: 5px;
+      padding: 5px 8px;
+      border-radius: 25px;
+      background-color: var(--theme-purple);
     }
     ion-textarea {
         margin-top: 10px;

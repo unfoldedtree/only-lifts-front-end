@@ -87,13 +87,9 @@
         closeModal() {
             modalController.dismiss()
         },
-        dateStringToNumber(dateString: string) {
-            const dateArray = dateString.split(/[\sT]+/)
-            return Date.parse(`${dateArray[0]} ${dateArray[1]}`);
-        },
-        processDate(postDate: string) {
+        processDate(postDate: number) {
             let timeText = "Now"
-            const milliseconds = Math.abs(this.dateStringToNumber(postDate) - Date.parse(Date()));
+            const milliseconds = Math.abs(postDate - Date.now());
             const hours = milliseconds / 36e5
             const h = Math.floor(hours);
             const m = Math.floor(hours * 60)
