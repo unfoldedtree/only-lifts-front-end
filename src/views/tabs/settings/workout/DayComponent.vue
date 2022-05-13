@@ -1,15 +1,16 @@
 <template>
   <div class="day-outer">
     <div class="day-header">
-      <ion-label>{{ componentIndex + 1 }}. </ion-label>
-      <ion-input placeholder="Day Name" :value="componentDay.name"></ion-input>
-      <ion-icon @click="$emit('remove-day', componentIndex)" :icon="close" />
-      <ion-icon :icon="settingsOutline" />
+      <ion-label>{{ componentIndex + 1 }}.&nbsp;</ion-label>
+      <ion-input v-if="editable" placeholder="Day Name" :value="componentDay.name"></ion-input>
+      <ion-label v-else class="name-label">{{ componentDay.name }}</ion-label>
+      <ion-icon v-if="editable" @click="$emit('remove-day', componentIndex)" :icon="close" />
+      <ion-icon v-if="editable" :icon="settingsOutline" />
       <ion-icon class="expand-btn" :class="expanded ? 'expanded' : ''" @click="expanded = !expanded" :icon="chevronDownOutline" />
     </div>
     <div class="day-exercises" :class="expanded ? 'expanded' : ''">
-      <day-exercises-component v-bind:componentDay="componentDay"></day-exercises-component>
-      <div class="day-utilities">
+      <day-exercises-component :componentDay="componentDay" :editable="editable"></day-exercises-component>
+      <div class="day-utilities" v-if="editable">
         <a @click="openAddExercisesModal()">Add Exercise</a>
         <a @click="$emit('clone-day', componentIndex)">Clone Day</a>
       </div>
@@ -49,7 +50,7 @@ export default defineComponent({
     IonLabel,
     DayExercisesComponent
   },
-  props: ["day", "index"],
+  props: ["day", "index", "editable"],
   setup() {
     return {
       thumbsUp,
@@ -114,9 +115,10 @@ export default defineComponent({
   justify-content: center;
   padding: 7px 15px;
 }
-/* .day-header ion-label {
-  color: var(--bs-text-muted);
-} */
+.day-header .name-label {
+  flex: 1;
+  padding: 5px 0;
+}
 .day-header ion-icon {
   color: var(--bs-text-muted);
   font-size: 150%;

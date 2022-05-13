@@ -8,7 +8,7 @@
       <a @click="save()">Save</a>
     </div>
     <div class="content">
-      <day-exercises-component v-bind:componentDay="editExercises"></day-exercises-component>
+      <day-exercises-component v-bind:componentDay="editExercises" :editable="editable"></day-exercises-component>
       <div class="utilities">
         <a @click="openAddExercisesModal()">Add Exercise</a>
       </div> 
@@ -25,8 +25,8 @@ import {
 } from "@ionic/vue";
 import { closeOutline, reorderThreeOutline } from "ionicons/icons";
 import { Exercise } from "@/models/exercise";
-import DayExercisesComponent from '@/views/tabs/settings/exercises/DayExercisesComponent.vue'
-import AddExercisesComponent from "@/views/tabs/settings/exercises/AddExercisesComponent.vue";
+import DayExercisesComponent from '@/views/tabs/settings/workout/DayExercisesComponent.vue'
+import AddExercisesComponent from "@/views/tabs/settings/workout/AddExercisesComponent.vue";
 
 export default defineComponent({
   components: {
@@ -34,7 +34,17 @@ export default defineComponent({
     IonLabel,
     DayExercisesComponent,
   },
-  props: ["day"],
+  // props: ["day"],
+  props: {
+    day: {
+      type: Object
+    },
+    index: Number,
+    editable: {
+      type: Boolean,
+      default: true
+    }
+  },
   setup() {
     return {
       closeOutline,
@@ -96,7 +106,7 @@ export default defineComponent({
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--card-background-flat);
+  background-color: var(--theme-bg-1);
   box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
 }
 .header div {

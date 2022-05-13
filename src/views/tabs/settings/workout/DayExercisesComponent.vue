@@ -9,9 +9,10 @@
     <template #item="{ element, index }">
       <div class="exercise-outer">
         <div class="exercise-header">
-          <ion-icon class="handle" :icon="repeatOutline" />
+          <ion-icon class="handle" v-if="editable" :icon="repeatOutline" />
           <label>{{ index + 1 }}. {{ element.name }}</label>
           <ion-icon
+            v-if="editable"
             @click="removeExercise(index)"
             :icon="removeCircleOutline"
           />
@@ -19,14 +20,14 @@
         <div class="exercise-workouts">
           <table>
             <tr>
-              <th class="remove-set"></th>
+              <th class="remove-set" v-if="editable"></th>
               <th>#</th>
               <th>Reps</th>
               <th>Weight</th>
               <th>AMRAP</th>
             </tr>
             <tr v-for="(set, setIndex) in element.sets" v-bind:key="set.id">
-              <th class="remove-set">
+              <th class="remove-set" v-if="editable">
                 <ion-icon
                   @click="removeSet(element, index, setIndex)"
                   :icon="removeCircleOutline"
@@ -39,13 +40,14 @@
                 <ion-checkbox
                   color="tertiary"
                   :modelValue="set.amrap"
+                  :disabled="!editable"
                   @update:modelValue="set.amrap = $event"
                 ></ion-checkbox>
               </th>
             </tr>
           </table>
         </div>
-        <div class="exercise-footer">
+        <div class="exercise-footer" v-if="editable">
           <a @click="addSet(element)">Add Set</a>
           <a @click="cloneExercise(index)">Clone Exercise</a>
         </div>
@@ -93,7 +95,7 @@ export default defineComponent({
         removeCircleOutline,
       }
   },
-  props: ["componentDay"],
+  props: ["componentDay", "editable"],
   data() {
       return {
           day: this.componentDay

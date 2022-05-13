@@ -1,6 +1,6 @@
 <template>
   <div
-    v-for="(day, index) in newSchedule"
+    v-for="(day, index) in computeRollingSchedule"
     :key="day.name"
     class="workout-outer-div"
     @click="openModal(day)"
@@ -47,6 +47,7 @@ import { workoutStore } from "@/stores/workoutInfo";
 import { Workout } from "@/models/workout";
 import { checkmarkCircleOutline } from "ionicons/icons";
 import {timerStore} from "@/stores/timer";
+import axios from "axios";
 
 export default defineComponent({
   components: {
@@ -54,7 +55,7 @@ export default defineComponent({
   },
   data() {
     return {
-      newSchedule: this.getNewSchedule(),
+      newSchedule: [] as any[],
       checkmarkCircleOutline,
     };
   },
@@ -70,37 +71,20 @@ export default defineComponent({
         swipeToClose: false,
       });
 
-      this.$router.replace({
-        query: { name: workoutStore.state.currentWorkout.name },
-      });
-
+      await this.$router.replace({ query: { id: workoutStore.state.currentWorkout._id }});
       await modal.present();
-
       const { data } = await modal.onDidDismiss();
-
-      this.$router.push(this.$route.path);
-
-      location.hash = "";
+      await this.$router.push(this.$route.path);
 
       if (data == "success") {
         workoutStore.state.currentWorkout.finishedTimestamp = Date.now();
         workoutStore.state.currentWorkout.startTimestamp = +timerStore.state.workoutTimestamp;
-        this.newSchedule = Workout.completeWorkout(
-          this.newSchedule,
-          workoutStore.state.currentWorkout
-        );
+        this.newSchedule = Workout.completeWorkout(workoutStore.state.rollingSchedule, workoutStore.state.currentWorkout);
         timerStore.commit("resetWorkoutTime");
         timerStore.commit("resetRestTime");
         workoutStore.commit("setRollingSchedule", this.newSchedule);
         workoutStore.commit("clearWorkouts");
       }
-    },
-    getNewSchedule() {
-      const schedule = Workout.calcRollingSchedule(
-        workoutStore.state.initialSchedule
-      );
-      workoutStore.commit("setRollingSchedule", schedule);
-      return schedule;
     },
     returnWorkoutReps(sets: any) {
       const reps = sets.map((it: any) =>
@@ -116,20 +100,27 @@ export default defineComponent({
         sets.map((it: any) => it.reps).reduce((a: any, b: any) => a + b);
       return Number.isInteger(avgWeight) ? avgWeight : avgWeight.toFixed(1);
     },
-  },
-  mounted() {
-    if (this.$route.query.name) {
-        const foundDay = this.newSchedule.filter((it: any) => {
-            return it.name === this.$route.query.name
-        })
-
-        if (foundDay.length > 0) {
-            this.openModal(foundDay[0])
-        } else {
-            this.$router.push(this.$route.path);
-        }
+    loadModal() {
+      console.log("New Schedule: ", this.computeRollingSchedule)
+      if (this.$route.query.id) {
+        const foundDay = this.computeRollingSchedule.filter((it: any) => it._id == this.$route.query.id)[0]
+        console.log(foundDay)
+        this.openModal(foundDay)
+      }
     }
   },
+  computed: {
+    computeRollingSchedule: function () {
+      const schedule = Workout.calcRollingSchedule(workoutStore.state.initialSchedule);
+      workoutStore.commit("setRollingSchedule", schedule);
+      return schedule;
+    }
+  },
+  watch: {
+    computeRollingSchedule() {
+      this.loadModal()
+    }
+  }
 });
 </script>
 

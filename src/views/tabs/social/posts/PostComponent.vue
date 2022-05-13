@@ -27,7 +27,7 @@
             </div>
 
             <div class="post-comments-div">
-                <span class="post-comments-count" @click="openViewPostModal(post)">{{ post.comments.length }} comments</span>
+                <span class="post-comments-count" @click="$emit('viewPost', post)">{{ post.comments.length }} comments</span>
             </div>
         </div>
 
@@ -64,18 +64,6 @@
         }
     },
     methods: {
-        async openViewPostModal(post: any):Promise<any> {
-            const modal = await modalController
-                .create({
-                    component: PostViewModalComponent,
-                    cssClass: 'fullscreen',
-                    swipeToClose: false,
-                    componentProps: {
-                        post: post
-                    }
-                })
-            return modal.present()
-        },
         processDate(postDate: number) {
             let timeText = "Now"
             const milliseconds = Math.abs(postDate - Date.now());

@@ -15,6 +15,7 @@ import { timerStore } from "@/stores/timer";
 import { workoutStore } from "@/stores/workoutInfo";
 import { closeOutline } from "ionicons/icons";
 import { IonIcon } from "@ionic/vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -28,14 +29,9 @@ export default defineComponent({
       closeOutline,
     };
   },
-  methods: {
-    setUserWorkoutData() {
-      workoutStore.commit("prepareWorkoutData");
-      console.log(workoutStore.state.initialSchedule);
-    },
-  },
-  created() {
-    this.setUserWorkoutData();
+  async mounted() {
+    const userData = await axios.get("http://localhost:3000/user-data")
+    workoutStore.commit("prepareWorkoutData", userData.data)
   },
   computed: {
     restTimer() {

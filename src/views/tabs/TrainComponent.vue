@@ -32,7 +32,7 @@
 
 <style>
   #train-container {
-    padding: 10px 0;
+    padding-top: 10px;
     margin: 0 auto;
     max-width: 800px;
     display: flex;

@@ -1,11 +1,11 @@
 <template>
     <div class="post-outer-div">
-        <div class="post-upper-details">
-            <div class="modal-back-button" @click="closeModal()">
-                <ion-icon :icon="close" />
-            </div>
-            <ion-searchbar mode="ios" v-model="filterValue"></ion-searchbar>
+      <div class="header">
+        <div>
+          <ion-icon @click="closeModal()" :icon="close" />
+          <ion-searchbar mode="ios" v-model="filterValue"></ion-searchbar>
         </div>
+      </div>
         
         <div class="post-content">
               <ion-accordion-group>
@@ -37,10 +37,10 @@
 </template>
 
 <script lang="ts">
-  import exercise_data from '../../../../../public/dev-data/exercises/exercise-data.json';
   import { ellipsisHorizontal, chevronBackOutline, thumbsUp, mail, send, close } from 'ionicons/icons';
   import { IonList, IonLabel, IonItem, IonAccordion, IonAccordionGroup, IonIcon, modalController, IonSearchbar } from '@ionic/vue';
   import { defineComponent } from 'vue';
+  import axios from "axios";
 
   export default defineComponent({
     components: {
@@ -78,9 +78,13 @@
     },
     data() {
         return {
-            exerciseJson: exercise_data,
+            exerciseJson: [] as any[],
             filterValue: ''
         }
+    },
+    async mounted() {
+      const { data } = await axios.get('http://localhost:3000/exercises')
+      this.exerciseJson = data;
     }
   });
 </script>
@@ -107,72 +111,34 @@
         max-width: 800px;
         background-color: #000000;
     }
-    .modal-back-button {
-        color: var(--bs-gray-base);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 150%;
-        cursor: pointer;
+    .header {
+      padding: 0 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--theme-bg-1);
+      box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
     }
-    .post-upper-details {
-        padding: 0 5px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        background-color: var(--card-background-flat);
-        box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+    .header div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
-    .create-post-submit {
-        font-size: 120%;
-        color: red;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .header div ion-icon {
+      color: var(--bs-gray-base);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 150%;
+      cursor: pointer;
     }
-    .post-options-button {
-        cursor: pointer;
-    }
-    .post-content-header {
-        padding: 0 15px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    .post-profile-pic {
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-    }
-    .post-profile-image {
-        border-radius: 50%;
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background-color: whitesmoke;
-    }
-    .post-profile-user-info {
-        color: var(--primary-text);
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        height: 100%;
-        margin: 7px 14px 7px 7px;
-    }
-    .post-options {
-        display: flex;
-        flex: 1;
-        justify-content: flex-end;
-        align-items: flex-start;
-        color: var(--bs-gray-base);
+    .header a {
+      cursor: pointer;
+      color: var(--theme-purple);
+      padding: 7px;
+      margin-right: 5px;
     }
 </style>

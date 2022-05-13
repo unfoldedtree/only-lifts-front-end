@@ -71,7 +71,7 @@
 <script scoped lang="ts">
 import draggable from "vuedraggable";
 import { Exercise } from "@/models/exercise";
-import AddExercisesComponenet from "./AddExercisesComponent.vue"
+import AddExercisesComponenet from "../workout/AddExercisesComponent.vue"
 import {
   ellipsisHorizontal,
   chevronBackOutline,

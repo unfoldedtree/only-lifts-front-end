@@ -1,17 +1,11 @@
-import user_data from "../../public/dev-data/user/user-data.json";
-import workout_data from "../../public/dev-data/workouts/workout-data-starter.json";
 import {workoutStore} from "@/stores/workoutInfo";
-import {timerStore} from "@/stores/timer";
+import axios from "axios";
 
 export class Workout {
-    public static getUserData() {
-        const user = user_data[0]
-        return user;
-    }
-
-    public static getActiveProgram(user: any) {
+    public static async getActiveProgram(user: any) {
         if (user.currentWorkoutProgramId) {
-            return workout_data.filter((it: any) =>  it._id === user.currentWorkoutProgramId)[0];
+            const { data } = await axios.get(`http://localhost:3000/workouts/${user.currentWorkoutProgramId}`)
+            return data;
         } else {
             return null;
         }
@@ -31,12 +25,7 @@ export class Workout {
 
     public static calcRollingSchedule(schedule: any) {
         const recentCycle = workoutStore.state.recentCycle;
-        console.log("Recent Cycle: ", recentCycle);
-
         const newSchedule = this.computeSchedule(schedule, recentCycle);
-
-        console.log("Rolling Schedule: ", newSchedule)
-
         return newSchedule
     }
 

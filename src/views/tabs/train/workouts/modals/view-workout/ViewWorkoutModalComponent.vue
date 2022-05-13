@@ -235,7 +235,8 @@ export default defineComponent({
 }
 .workout-outer-div {
   width: 100%;
-  background-color: var(--theme-bg-1);
+  /*background-color: var(--theme-bg-1);*/
+  background-color: #000000;
   padding: 5px 15px 0px 15px;
   max-width: 800px;
 }
@@ -295,7 +296,8 @@ export default defineComponent({
 .workout-exercise-div {
   margin: 10px 0;
   padding: 10px;
-  background-color: var(--card-background-flat);
+  /*background-color: var(--card-background-flat);*/
+  background-color: var(--theme-bg-1);
   box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
 }
 .exercise-header {
@@ -348,7 +350,8 @@ export default defineComponent({
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  background-color: var(--bs-text-muted);
+  /*background-color: var(--bs-text-muted);*/
+  background-color: var(--card-background-flat);
   margin-bottom: 5px;
 }
 .exercise-rep-count.selected {

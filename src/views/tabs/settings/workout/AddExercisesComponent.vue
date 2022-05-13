@@ -21,7 +21,6 @@
 </template>
 
 <script lang="ts">
-import exercise_data from "../../../../../public/dev-data/exercises/exercise-data.json";
 import {
   ellipsisHorizontal,
   chevronBackOutline,
@@ -32,7 +31,8 @@ import {
 } from "ionicons/icons";
 import { IonIcon, modalController, IonSearchbar } from "@ionic/vue";
 import { defineComponent } from "vue";
-import ExerciseComponent from "./ExerciseComponent.vue";
+import ExerciseComponent from "../exercises/ExerciseComponent.vue";
+import axios from "axios";
 
 export default defineComponent({
   components: {
@@ -80,15 +80,19 @@ export default defineComponent({
           );
         }
       }
-    },
+    }
   },
   data() {
     return {
-      exerciseJson: exercise_data,
+      exerciseJson: [] as any[],
       filterValue: "",
       selectedExercises: [] as any,
     };
   },
+  async mounted() {
+    const { data } = await axios.get("http://localhost:3000/exercises")
+    this.exerciseJson = data
+  }
 });
 </script>
 

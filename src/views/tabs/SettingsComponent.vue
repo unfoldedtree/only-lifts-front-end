@@ -15,42 +15,29 @@
           <ion-item><ion-label>Manage Subscriptions</ion-label></ion-item>
           <ion-item><ion-label>Personal Preferences</ion-label></ion-item>
           <ion-item><ion-label>Privacy and Visibility</ion-label></ion-item>
+          <ion-item @click="signOut"><ion-label>Log Out</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>Workout</ion-label></ion-item-divider>
 
+          <ion-item @click="openModal('view-programs')"><ion-label>View Workout Programs</ion-label></ion-item>
           <ion-item><ion-label>Select Workout Program</ion-label></ion-item>
-          <ion-item><ion-label>Load Additional Workouts</ion-label></ion-item>
-          <ion-item><ion-label>Edit Additional Programs</ion-label></ion-item>
-          <ion-item @click="openViewPostModal('build-program')"><ion-label>Build Your Own Program</ion-label></ion-item>
-          <ion-item><ion-label>Edit Workout Program</ion-label></ion-item>
-          <ion-item><ion-label>Save Current Workout to Program</ion-label></ion-item>
-          <ion-item><ion-label>Export Workout</ion-label></ion-item>
-          <ion-item><ion-label>Import Workout</ion-label></ion-item>
-
-          <ion-item-divider sticky><ion-label>Warm-up</ion-label></ion-item-divider>
-
-          <ion-item><ion-label>Select Warm-up Method</ion-label></ion-item>
-          <ion-item><ion-label>Build Your Own Warm-up</ion-label></ion-item>
-          <ion-item><ion-label>Edit Warm-up</ion-label></ion-item>
+          <ion-item @click="openModal('build-program')"><ion-label>Build Workout Program</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>Increment Scheme</ion-label></ion-item-divider>
 
-          <ion-item><ion-label>Build Your Own Increment Scheme</ion-label></ion-item>
+          <ion-item><ion-label>View Increment Schemes</ion-label></ion-item>
+          <ion-item><ion-label>Build Increment Scheme</ion-label></ion-item>
           <ion-item><ion-label>Edit Increment Scheme</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>Miscellaneous</ion-label></ion-item-divider>
 
-          <ion-item @click="openViewPostModal('view-exercises')"><ion-label>View Exercises</ion-label></ion-item>
+          <ion-item @click="openModal('view-exercises')"><ion-label>View Exercises</ion-label></ion-item>
           <ion-item><ion-label>Add Exercise</ion-label></ion-item>
-          <ion-item><ion-label>View Body-Weights</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>System</ion-label></ion-item-divider>
 
           <ion-item><ion-label>Settings</ion-label></ion-item>
-          <ion-item><ion-label>Backup</ion-label></ion-item>
-          <ion-item><ion-label>Restore</ion-label></ion-item>
           <ion-item><ion-label>History</ion-label></ion-item>
-          <ion-item><ion-label>Exports</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>About</ion-label></ion-item-divider>
 
@@ -67,18 +54,25 @@
 <script lang="ts">
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonItemDivider, IonLabel, IonList, modalController } from '@ionic/vue';
 import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
+import {query} from "express";
+import axios from "axios";
 
   export default defineComponent({
     methods: {
-      async openViewPostModal(hashString: string):Promise<any> {
+      async openModal(viewString: string, idString?: string):Promise<any> {
         const foundEl = this.settingsReference.filter((it: any) => {
-          return it.hashString == hashString
+          return it.hashString == viewString
         })
         this.componentName = foundEl[0].component
+        this.componentCategory = foundEl[0].category
 
-        this.$router.replace({
-          query: { view: hashString },
-        });
+        const query = Object.assign({}, this.$route.query);
+        query.view = viewString;
+        if (idString) {
+          query.id = idString
+        }
+        await this.$router.push({ query });
+
         const modal = await modalController
         .create({
           component: this.dynamicComponent,
@@ -89,9 +83,14 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
         await modal.present()
 
         await modal.onDidDismiss()
-        this.$router.push(this.$route.path);
+        await this.$router.push(this.$route.path);
         this.componentName = ''
       },
+      async signOut() {
+        const { data } = await axios.post('http://localhost:3000/auth/logout')
+        console.log(data)
+        await this.$router.push({ name: 'login'})
+      }
     },
     components: {
       IonContent,
@@ -107,9 +106,12 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
     data() {
       return {
         componentName: '',
+        componentCategory: '',
         settingsReference: [
-          { hashString: 'view-exercises', component: 'ViewExercisesComponent' },
-          { hashString: 'build-program', component: 'BuildProgramComponent' }
+          { hashString: 'view-exercises', category: 'exercises', component: 'ViewExercisesComponent' },
+          { hashString: 'view-programs', category: 'workout', component: 'ViewProgramsListComponent' },
+          { hashString: 'edit-program', category: 'workout', component: 'ViewProgramsListComponent' },
+          { hashString: 'build-program', category: 'workout', component: 'BuildProgramComponent' }
         ],
       }
     },
@@ -118,29 +120,24 @@ import { defineComponent, markRaw, defineAsyncComponent } from 'vue';
         if (this.componentName == "") {
           return null
         }
-        return markRaw(defineAsyncComponent(() => import(`@/views/tabs/settings/exercises/${this.componentName}.vue`) ))
+        return markRaw(defineAsyncComponent(() => import(`@/views/tabs/settings/${this.componentCategory}/${this.componentName}.vue`) ))
       }
     },
     mounted() {
       if (this.$route.query.view) {
         try {
-          const hash = this.$route.query.view.toString();
-          const hashArr = this.settingsReference.map((it: any) => it.hashString)
-          if (hashArr.indexOf(hash) !== -1) {
-            this.openViewPostModal(hash)
+          const view = this.$route.query.view.toString();
+          const id = this.$route.query.id ? this.$route.query.id.toString() : ''
+          const queryArr = this.settingsReference.map((it: any) => it.hashString)
+          if (queryArr.indexOf(view) !== -1) {
+            this.openModal(view, id)
             return
-          } else {
-            location.hash = ''
-            this.$router.push(this.$route.path);
           }
-        } catch (err) {
-          location.hash = ''
-          this.$router.push(this.$route.path);
+        } catch (e) {
+          console.log(e)
         }
-      } else {
-        location.hash = ''
-        this.$router.push(this.$route.path);
       }
+      this.$router.push(this.$route.path);
     }
   });
 </script>

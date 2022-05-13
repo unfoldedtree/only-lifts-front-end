@@ -7,7 +7,7 @@
     </ion-header>
     <ion-content>
       <div id="post-container">
-          <post-component v-for="post in filteredPosts" v-bind:key="post.id" v-bind:post="post" />
+          <post-component @viewPost="openViewPostModal" v-for="post in filteredPosts" v-bind:key="post.id" v-bind:post="post" />
       </div>
       <social-new-button-component @create-post="createPost" />
     </ion-content>
@@ -15,49 +15,73 @@
 </template>
 
 <script lang="ts">
-  import user_data from '../../../public/dev-data/user/user-data.json';
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+  import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, modalController} from '@ionic/vue';
   import { defineComponent } from 'vue';
   import SocialNewButtonComponent from '@/views/tabs/social/SocialNewButtonComponent.vue';
   import PostComponent from './social/posts/PostComponent.vue';
   import {Post} from "@/models/post";
+  import axios from "axios";
+  import PostViewModalComponent from "@/views/tabs/social/posts/modals/view-post/PostViewModalComponent.vue";
+  import { search } from "ionicons/icons";
 
   export default defineComponent({
     components: {
       IonContent,
       IonHeader,
       IonPage,
-      IonTitle,
       IonToolbar,
+      IonTitle,
       SocialNewButtonComponent,
       PostComponent,
     },
     setup() {
-      return {};
+      return {
+        search
+      };
     },
     data() {
       return {
-        userJson: user_data,
-        filteredPosts: [{}]
+        filteredPosts: [] as any[]
       }
     },
     methods: {
-      extractPosts() {
-        const posts = this.userJson.map(({ posts }) => posts).flat()
-        const filteredPosts = posts.flat().sort((a, b) => b.postDate - a.postDate)
-        this.filteredPosts = filteredPosts
-      },
       createPost(post: Post) {
         this.filteredPosts.unshift(post)
-      }
+      },
+      async openViewPostModal(post: any):Promise<any> {
+        const modal = await modalController
+            .create({
+              component: PostViewModalComponent,
+              cssClass: 'fullscreen',
+              swipeToClose: false,
+              componentProps: {
+                post: post
+              }
+            })
+        await this.$router.push({
+          query: { id: post.id }
+        });
+        await modal.present()
+        await modal.onDidDismiss()
+        await this.$router.replace(this.$route.path)
+      },
     },
-    beforeMount() {
-      this.extractPosts()
+    async mounted() {
+      const { data } = await axios.get('http://localhost:3000/posts')
+      this.filteredPosts = data
+
+
+      if (this.$route.query.id) {
+          const foundPost = this.filteredPosts.filter((it: any) => it.id == this.$route.query.id)[0]
+          if (foundPost) {
+            await this.openViewPostModal(foundPost)
+          }
+      }
     }
   });
 </script>
 
-<style>
+<style scoped>
   #post-container {
     padding: 10px 0;
     margin: 0 auto;

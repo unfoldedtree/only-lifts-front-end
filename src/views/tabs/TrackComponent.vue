@@ -5,7 +5,7 @@
         <ion-title>Track</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content scroll-y="false">
       <calendar-view
           :items="getHistoryItems"
           :show-date="showDate"
@@ -18,6 +18,7 @@
           />
         </template>
       </calendar-view>
+      <track-totals :stats="getSumData"></track-totals>
     </ion-content>
   </ion-page>
 </template>
@@ -26,13 +27,15 @@
   import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, modalController } from '@ionic/vue';
   import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
   import { defineComponent } from 'vue';
-  import "../../../../myApp/node_modules/vue-simple-calendar/dist/style.css";
-  import "../../../../myApp/node_modules/vue-simple-calendar/static/css/default.css"
+  import "../../../../workout-app-vue/node_modules/vue-simple-calendar/dist/style.css";
+  import "../../../../workout-app-vue/node_modules/vue-simple-calendar/static/css/default.css"
   import { workoutStore } from "@/stores/workoutInfo";
   import PastWorkoutModalComponent from "@/views/tabs/train/workouts/modals/view-workout/PastWorkoutModalComponent";
+  import TrackTotals from "@/views/tabs/track/TrackTotals";
 
   export default defineComponent({
     components: {
+      TrackTotals,
       IonContent,
       IonHeader,
       IonPage,
@@ -43,7 +46,10 @@
     },
     data: function() {
       return {
-        showDate: new Date()
+        showDate: new Date(),
+        stats: {
+          totalWorkouts: 0
+        }
       }
     },
     computed: {
@@ -55,9 +61,35 @@
             startDate: new Date(+it.finishedTimestamp)
           }
         })
+      },
+      getSumData: function () {
+        const workouts = workoutStore.state.workoutHistory;
+        let exercises = workouts.map(it => it.exercises).flat()
+        let sets = exercises.map(it => it.sets).flat();
+
+        let totalWorkouts = workouts.length;
+        let totalSets = sets.length;
+        let totalReps = sets.map(it => it.reps).reduce((a, b) => a + b, 0);
+        let totalVolume = sets.map(it => it.reps * it.weight).reduce((a, b) => a + b, 0)
+        let averageVolume = (totalVolume / workouts.length)
+
+        return {
+          totalWorkouts: this.formatNumbers(totalWorkouts),
+          totalSets: this.formatNumbers(totalSets),
+          totalReps: this.formatNumbers(totalReps),
+          totalVolume: this.formatNumbers(totalVolume),
+          averageVolume: this.formatNumbers(averageVolume)
+        }
       }
     },
     methods: {
+      formatNumbers(number) {
+        if (number > 10000) {
+          return `${Math.round(((number / 1000) + Number.EPSILON) * 100) / 100}K`
+        } else {
+          return `${Math.round(((number) + Number.EPSILON) * 100) / 100}`
+        }
+      },
       setShowDate(d) {
         this.showDate = d;
       },
