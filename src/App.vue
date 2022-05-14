@@ -29,10 +29,6 @@ export default defineComponent({
       closeOutline,
     };
   },
-  async mounted() {
-    const userData = await axios.get("http://localhost:3000/user-data")
-    workoutStore.commit("prepareWorkoutData", userData.data)
-  },
   computed: {
     restTimer() {
       return timerStore.state.restTimerCurrent;

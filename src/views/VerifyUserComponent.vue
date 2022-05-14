@@ -4,29 +4,11 @@
       <div class="outer">
         <div class="inner">
           <div class="title">VERIFY</div>
-<!--          <div class="intro">-->
-<!--            <span>NEW TO WORKOUT APP?&nbsp;</span>-->
-<!--            <span class="signup-text">SIGN UP FOR FREE</span>-->
-<!--          </div>-->
           <ion-item class="email-div">
             <ion-label position="stacked">Code</ion-label>
             <ion-input v-model="code" placeholder="Enter email code here..."></ion-input>
           </ion-item>
-<!--          <ion-item class="password-div">-->
-<!--            <ion-label position="stacked">Password</ion-label>-->
-<!--            <ion-input v-model="pass" type="password" placeholder="Enter password here..."></ion-input>-->
-<!--          </ion-item>-->
-<!--          <div class="forgot-div">-->
-<!--            <div>-->
-<!--              <ion-label>REMEMBER ME</ion-label>-->
-<!--              <ion-checkbox color="tertiary"></ion-checkbox>-->
-<!--            </div>-->
-<!--            <a @click="goToReset">FORGOT?</a>-->
-<!--          </div>-->
           <ion-button class="login-standard" expand="full" color="tertiary" @click="verify">REGISTER</ion-button>
-<!--          <div class="or-label">OR</div>-->
-<!--          <ion-button class="login-other" expand="full" color="danger">LOG IN WITH GOOGLE</ion-button>-->
-<!--          <ion-button class="login-other" expand="full" color="primary">LOG IN WITH FACEBOOK</ion-button>-->
         </div>
       </div>
     </ion-content>
@@ -55,7 +37,7 @@ export default defineComponent({
   },
   methods: {
     async verify() {
-      const { data } = await axios.post('http://localhost:3000/auth/send-reset-code', { username: this.email, code: this.code })
+      const { data } = await axios.post('http://localhost:3000/auth/verify-register-code', { username: this.email, code: this.code })
       console.log(data)
       if (data) {
         await this.$router.push({ name: 'login' })

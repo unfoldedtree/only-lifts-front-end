@@ -8,7 +8,7 @@
             <div class="post-profile-user-info">
                 <div>William McMahan</div>
                 <div>
-                    <span class="post-date-info">{{ processDate(post.postDate) }}</span>
+                    <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
                 </div>
             </div>
              <div class="post-options">
@@ -22,17 +22,17 @@
 
         <div class="post-lower-details">
             <div class="post-likes-div">
-                <span class="post-likes-count">{{ post.likes.length }}</span>
+                <span class="post-likes-count">{{ post?.likes?.length || 0 }}</span>
                 <ion-icon :icon="thumbsUp" />
             </div>
 
             <div class="post-comments-div">
-                <span class="post-comments-count" @click="$emit('viewPost', post)">{{ post.comments.length }} comments</span>
+                <span class="post-comments-count" @click="$emit('viewPost', post)">{{ post?.comments?.length || 0 }} comments</span>
             </div>
         </div>
 
         <div class="post-button-div">
-            <div class="post-button">Like</div>
+            <div class="post-button" @click="toggleLike">Like</div>
             <div class="post-button">Comment</div>
             <div class="post-button">Share</div>
         </div>
@@ -45,6 +45,7 @@
   import { IonIcon, modalController, actionSheetController } from '@ionic/vue';
   import { thumbsUp, mail, ellipsisHorizontal, caretForwardCircle, close, heart, trash, share } from 'ionicons/icons';
   import PostViewModalComponent from "./modals/view-post/PostViewModalComponent.vue";
+  import axios from "axios";
 
   export default defineComponent({
     components: {
@@ -64,6 +65,10 @@
         }
     },
     methods: {
+        async toggleLike() {
+          const { data } = await axios.get(`http://localhost:3000/post/${this.post.id}/like`)
+          console.log(data)
+        },
         processDate(postDate: number) {
             let timeText = "Now"
             const milliseconds = Math.abs(postDate - Date.now());

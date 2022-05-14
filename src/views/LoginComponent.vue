@@ -24,9 +24,11 @@
             <a @click="goToReset">FORGOT?</a>
           </div>
           <ion-button class="login-standard" expand="full" color="tertiary" @click="login">LOG IN</ion-button>
-          <div class="or-label">OR</div>
-          <ion-button class="login-other" expand="full" color="danger" disabled>LOG IN WITH GOOGLE</ion-button>
-          <ion-button class="login-other" expand="full" color="primary" disabled>LOG IN WITH FACEBOOK</ion-button>
+          <div v-if="showProviders">
+            <div class="or-label">OR</div>
+            <ion-button class="login-other" expand="full" color="danger">LOG IN WITH GOOGLE</ion-button>
+            <ion-button class="login-other" expand="full" color="primary">LOG IN WITH FACEBOOK</ion-button>
+          </div>
         </div>
       </div>
     </ion-content>
@@ -50,6 +52,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showProviders: false,
       email: 'wmcmahan14@gmail.com',
       pass: 'Mcyammer1,'
     }

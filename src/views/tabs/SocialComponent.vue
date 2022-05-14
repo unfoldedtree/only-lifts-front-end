@@ -45,8 +45,10 @@
       }
     },
     methods: {
-      createPost(post: Post) {
-        this.filteredPosts.unshift(post)
+      async createPost(post: Post) {
+        const { data } = await axios.post('http://localhost:3000/posts', post)
+        const newPost = new Post(data)
+        this.filteredPosts.unshift(newPost)
       },
       async openViewPostModal(post: any):Promise<any> {
         const modal = await modalController

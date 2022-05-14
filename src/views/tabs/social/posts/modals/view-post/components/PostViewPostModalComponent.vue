@@ -11,7 +11,7 @@
             <div class="post-profile-user-info">
                 <div>William McMahan</div>
                 <div>
-                    <span class="post-date-info">{{ processDate(post.postDate) }}</span>
+                    <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
                 </div>
             </div>
              <div class="post-options">
@@ -25,12 +25,12 @@
 
         <div class="post-lower-details">
             <div class="post-likes-div">
-                <span class="post-likes-count">{{ post.likes.length }}</span>
+                <span class="post-likes-count">{{ post?.likes?.length || 0 }}</span>
                 <ion-icon :icon="thumbsUp" />
             </div>
 
             <div class="post-comments-div">
-                <span class="post-comments-count">{{ post.comments.length }} comments</span>
+                <span class="post-comments-count">{{ post?.comments?.length || 0 }} comments</span>
             </div>
         </div>
 

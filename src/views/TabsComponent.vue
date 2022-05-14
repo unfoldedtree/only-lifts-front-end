@@ -46,6 +46,8 @@
     IonRouterOutlet,
   } from '@ionic/vue';
   import { people, calendar, watch, settings, chatbubbles } from 'ionicons/icons';
+  import axios from "axios";
+  import {workoutStore} from "@/stores/workoutInfo";
 
   export default {
     name: 'TabsComponent',
@@ -67,6 +69,12 @@
         settings,
         chatbubbles,
       };
+    },
+    async mounted() {
+      const { data } = await axios.get("http://localhost:3000/profile")
+      if (data.currentProgramId) {
+        workoutStore.commit("prepareWorkoutData", data)
+      }
     },
   };
 </script>

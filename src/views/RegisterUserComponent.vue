@@ -8,6 +8,14 @@
             <ion-label position="stacked">Email</ion-label>
             <ion-input v-model="email" placeholder="Enter email here..."></ion-input>
           </ion-item>
+          <ion-item class="fname-div">
+            <ion-label position="stacked">First Name</ion-label>
+            <ion-input v-model="firstName" placeholder="Enter first name here..."></ion-input>
+          </ion-item>
+          <ion-item class="lname-div">
+            <ion-label position="stacked">Last Name</ion-label>
+            <ion-input v-model="lastName" placeholder="Enter last name here..."></ion-input>
+          </ion-item>
           <ion-item class="password-div">
             <ion-label position="stacked">Password</ion-label>
             <ion-input v-model="pass" type="password" placeholder="Enter password here..."></ion-input>
@@ -36,12 +44,19 @@ export default defineComponent({
   data() {
     return {
       email: 'wmcmahan14@gmail.com',
-      pass: 'G0d_0f_hammers'
+      firstName: 'Will',
+      lastName: 'McMahan',
+      pass: 'Mcyammer1,'
     }
   },
   methods: {
     async register() {
-      const { data } = await axios.post('http://localhost:3000/auth/register', { username: this.email, password: this.pass })
+      const { data } = await axios.post('http://localhost:3000/auth/register', {
+        username: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        password: this.pass
+      })
       console.log(data)
       if (data) {
         await this.$router.push({ name: 'verify', params: { username: this.email } })
@@ -83,7 +98,7 @@ export default defineComponent({
     cursor: pointer;
     color: var(--theme-purple);
   }
-  .email-div {
+  .email-div, .fname-div, .lname-div {
     margin-bottom: 20px;
     padding: 0;
     --padding-start: 0;

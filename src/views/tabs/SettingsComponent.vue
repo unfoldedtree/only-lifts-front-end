@@ -10,12 +10,11 @@
         <ion-list mode="md" lines="full">
           <ion-item-divider sticky><ion-label>Profile</ion-label></ion-item-divider>
 
-          <ion-item><ion-label>User Account</ion-label></ion-item>
+          <ion-item @click="openModal('user-account')"><ion-label>User Account</ion-label></ion-item>
           <ion-item><ion-label>Payment Methods</ion-label></ion-item>
           <ion-item><ion-label>Manage Subscriptions</ion-label></ion-item>
           <ion-item><ion-label>Personal Preferences</ion-label></ion-item>
           <ion-item><ion-label>Privacy and Visibility</ion-label></ion-item>
-          <ion-item @click="signOut"><ion-label>Log Out</ion-label></ion-item>
 
           <ion-item-divider sticky><ion-label>Workout</ion-label></ion-item-divider>
 
@@ -111,7 +110,8 @@ import axios from "axios";
           { hashString: 'view-exercises', category: 'exercises', component: 'ViewExercisesComponent' },
           { hashString: 'view-programs', category: 'workout', component: 'ViewProgramsListComponent' },
           { hashString: 'edit-program', category: 'workout', component: 'ViewProgramsListComponent' },
-          { hashString: 'build-program', category: 'workout', component: 'BuildProgramComponent' }
+          { hashString: 'build-program', category: 'workout', component: 'BuildProgramComponent' },
+          { hashString: 'user-account', category: 'profile', component: 'UserAccountComponent' }
         ],
       }
     },

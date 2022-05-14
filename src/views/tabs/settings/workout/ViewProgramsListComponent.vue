@@ -1,17 +1,10 @@
 <template>
   <div class="post-outer-div">
-<!--    <div class="post-upper-details">-->
-<!--      <div class="modal-back-button" @click="closeModal()">-->
-<!--        <ion-icon class="modal-back-icon" :icon="close" />-->
-<!--        <div class="modal-title">View Programs</div>-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="header">
       <div>
         <ion-icon @click="closeModal()" :icon="close" />
         <ion-label>View Programs</ion-label>
       </div>
-<!--      <a @click="save()">Save</a>-->
     </div>
 
     <div class="post-content">
