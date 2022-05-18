@@ -10,7 +10,7 @@
     <div class="post-content">
       <div class="program" v-for="(program , index) in programsList" v-bind:key="program.id" @click="openViewModal(program)" v-bind:program="program" v-bind:index="index">
         <div class="program-name">{{ program.name }}</div>
-        <div class="program-description">{{ program.about }}</div>
+        <div class="program-description">{{ program.description }}</div>
         <div class="program-tags">
           <div class="program-tag" v-for="tag in program.tags" v-bind:key="tag">{{ tag }}</div>
         </div>
@@ -61,7 +61,7 @@ export default defineComponent({
     },
     async openViewModal(program: any):Promise<any> {
       let query = Object.assign({}, this.$route.query);
-      query.id = program._id;
+      query.id = program.id;
       await this.$router.push({ query });
       const modal = await modalController
           .create({
@@ -89,7 +89,7 @@ export default defineComponent({
       await this.$router.push({ query })
     },
     async openEditModal(program: any) {
-      await this.$router.push({ query: { view: 'edit-program', id: program._id } })
+      await this.$router.push({ query: { view: 'edit-program', id: program.id } })
       const modal = await modalController
           .create({
             component: EditProgramComponent,
@@ -117,13 +117,13 @@ export default defineComponent({
     await this.getPrograms()
 
     if (this.$route.query.view == 'view-programs' && this.$route.query.id) {
-      const foundProgram = this.programsList.filter((it: any) => it._id == this.$route.query.id)[0]
+      const foundProgram = this.programsList.filter((it: any) => it.id == this.$route.query.id)[0]
       if (foundProgram) {
         await this.openViewModal(foundProgram)
       }
     }
     else if (this.$route.query.view == 'edit-program' && this.$route.query.id) {
-      const foundProgram = this.programsList.filter((it: any) => it._id == this.$route.query.id)[0]
+      const foundProgram = this.programsList.filter((it: any) => it.id == this.$route.query.id)[0]
       if (foundProgram) {
         await this.openEditModal(foundProgram)
       }

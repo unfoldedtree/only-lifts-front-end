@@ -10,10 +10,10 @@
 
     <div class="exercise-info" :class="expanded ? 'expanded' : ''">
       <ion-item>
-        <ion-label>Explanation: {{ exercise.explanation }}</ion-label>
+        <ion-label>Description: {{ exercise.description }}</ion-label>
       </ion-item>
       <ion-item>
-        <ion-label>URL: {{ exercise.url }}</ion-label>
+        <ion-label>URL: {{ exercise.link }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Type: {{ exercise.type }}</ion-label>

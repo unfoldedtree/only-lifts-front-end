@@ -9,7 +9,7 @@
 
         <div class="post-content">
           <div class="program">
-            <div class="program-name">Name: {{ user.firstName }} {{ user.lastName }}</div>
+            <div class="program-name">Name: {{ user.getUserName() }}</div>
             <div class="program-name">Email: {{ user.email }}</div>
             <div class="program-name">Registered: {{ (new Date(+user.registeredAt)).toLocaleString() }}</div>
           </div>
@@ -30,6 +30,8 @@ import { ellipsisHorizontal, chevronBackOutline, thumbsUp, mail, send, close } f
 import { IonList, IonLabel, IonItem, IonIcon, modalController, IonPage, IonContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import axios from "axios";
+import {userStore} from "@/stores/user";
+import {User} from "@/models/user";
 
 export default defineComponent({
   components: {
@@ -50,7 +52,7 @@ export default defineComponent({
   },
   data() {
     return {
-      user: {}
+      user: userStore.state.sessionUser
     }
   },
   methods: {
@@ -65,14 +67,7 @@ export default defineComponent({
     },
     async changePassword() {
       console.log("clicked change password")
-    },
-    async getUserData() {
-      const { data } = await axios.get("http://localhost:3000/profile")
-      this.user = data
     }
-  },
-  mounted() {
-    this.getUserData()
   }
 });
 </script>

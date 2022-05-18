@@ -9,7 +9,7 @@
                 <div class="post-profile-image"></div>
             </div>
             <div class="post-profile-user-info">
-                <div>William McMahan</div>
+                <div>{{ post.user.getUserName() }}</div>
                 <div>
                     <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
                 </div>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="post-button-div">
-            <div class="post-button">Like</div>
+            <div class="post-button" @click="toggleLike" :class="inLikes() ? 'selected' : ''">Like</div>
             <div class="post-button">Comment</div>
             <div class="post-button">Share</div>
         </div>
@@ -64,6 +64,9 @@
   import { defineComponent } from 'vue';
   import { IonIcon, modalController } from '@ionic/vue';
   import { thumbsUp, mail, ellipsisHorizontal, chevronBackOutline } from 'ionicons/icons';
+  import axios from "axios";
+  import {Post} from "@/models/post";
+  import {userStore} from "@/stores/user";
 
   export default defineComponent({
     components: {
@@ -84,6 +87,13 @@
         }
     },
     methods: {
+        async toggleLike() {
+          const { data } = await axios.get(`http://localhost:3000/post/${this.post.id}/like`)
+          this.$emit("updatePost", this.post, new Post(data))
+        },
+        inLikes() {
+          return this.post.likes.includes(userStore.state.sessionUser.userId)
+        },
         closeModal() {
             modalController.dismiss()
         },
@@ -288,5 +298,8 @@
     .comment-user-info {
         margin-bottom: 7px;
         color: var(--bs-text-muted);
+    }
+    .post-button.selected {
+      background-color: var(--card-background-flat);
     }
 </style>

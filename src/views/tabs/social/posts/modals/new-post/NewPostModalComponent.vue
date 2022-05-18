@@ -17,7 +17,7 @@
                     <div class="post-profile-image"></div>
                 </div>
                 <div class="post-profile-user-info">
-                    <div>William McMahan</div>
+                    <div>{{ getUserName() }}</div>
                 </div>
                 <div class="post-options">
                     <div class="post-options-button">
@@ -37,6 +37,7 @@
   import { IonIcon, modalController, IonTextarea } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import { Post } from "@/models/post";
+  import { userStore } from "@/stores/user";
 
   export default defineComponent({
     components: {
@@ -61,6 +62,9 @@
     methods: {
       closeModal() {
         modalController.dismiss()
+      },
+      getUserName() {
+        return userStore.state.sessionUser.getUserName()
       },
       buildPost() {
         const postObj = {

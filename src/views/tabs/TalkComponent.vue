@@ -70,10 +70,15 @@ export default defineComponent({
   methods: {
     extractUsers(users: any[]) {
       this.filteredUsers = users.map((it: any) => {
+        let name = `${it.firstName} ${it.lastName}`
+        if (it.middleName) {
+          name = `${it.firstName} ${it.middleName} ${it.lastName}`
+        }
+
         return {
-          id: it._id,
-          picture: it.picture,
-          name: it.name
+          id: it.userId,
+          picture: it.profilePic,
+          name: name
         }
       })
     },
@@ -81,11 +86,12 @@ export default defineComponent({
       return this.filteredUsers.filter((it: any) => message.recipients.includes(it.id))
     },
     createMessage(message: any) {
+      // TODO add support creating of chat room and sending of message.
       this.filteredMessages.unshift(message)
-    }
+    },
   },
   async beforeMount() {
-    const {data} = await axios.get('http://localhost:3000/users');
+    const {data} = await axios.get('http://localhost:3000/profiles/minimal');
     this.extractUsers(data)
   }
 });

@@ -16,7 +16,7 @@
         </ion-item>
         <ion-item class="program-description-item">
           <ion-label position="stacked">Description</ion-label>
-          <ion-input :value="exercise.about" placeholder="Enter program description..."></ion-input>
+          <ion-input :value="exercise.description" placeholder="Enter program description..."></ion-input>
         </ion-item>
         <div class="program-tags-div">
           <ion-item class="program-tags-item">

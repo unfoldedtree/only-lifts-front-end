@@ -90,7 +90,7 @@ export default defineComponent({
     };
   },
   async mounted() {
-    const { data } = await axios.get("http://localhost:3000/exercises")
+    const { data } = await axios.get("http://localhost:3000/exercises/default")
     this.exerciseJson = data
   }
 });

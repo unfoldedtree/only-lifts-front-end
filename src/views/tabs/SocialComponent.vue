@@ -7,7 +7,13 @@
     </ion-header>
     <ion-content>
       <div id="post-container">
-          <post-component @viewPost="openViewPostModal" v-for="post in filteredPosts" v-bind:key="post.id" v-bind:post="post" />
+          <post-component
+              v-for="post in filteredPosts"
+              :key="post.id"
+              :post="post"
+              @viewPost="openViewPostModal"
+              @updatePost="updatePost"
+          />
       </div>
       <social-new-button-component @create-post="createPost" />
     </ion-content>
@@ -50,6 +56,10 @@
         const newPost = new Post(data)
         this.filteredPosts.unshift(newPost)
       },
+      async updatePost( oldPost: Post, newPost: Post) {
+        newPost.user = oldPost.user;
+        this.filteredPosts[this.filteredPosts.indexOf(oldPost)] = newPost
+      },
       async openViewPostModal(post: any):Promise<any> {
         const modal = await modalController
             .create({
@@ -57,6 +67,7 @@
               cssClass: 'fullscreen',
               swipeToClose: false,
               componentProps: {
+                homeRef: this,
                 post: post
               }
             })
@@ -70,8 +81,9 @@
     },
     async mounted() {
       const { data } = await axios.get('http://localhost:3000/posts')
-      this.filteredPosts = data
+      this.filteredPosts = data.map((it: any) => new Post(it) )
 
+      console.log("Posts: ", this.filteredPosts)
 
       if (this.$route.query.id) {
           const foundPost = this.filteredPosts.filter((it: any) => it.id == this.$route.query.id)[0]

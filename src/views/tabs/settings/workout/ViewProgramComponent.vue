@@ -11,7 +11,7 @@
     <div class="post-content">
       <div class="program">
         <div class="program-name">{{ program.name }}</div>
-        <div class="program-description">{{ program.about }}</div>
+        <div class="program-description">{{ program.description }}</div>
         <div class="program-tags">
           <div class="program-tag" v-for="tag in program.tags" v-bind:key="tag">{{ tag }}</div>
         </div>

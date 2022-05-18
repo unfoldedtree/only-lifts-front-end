@@ -54,24 +54,32 @@
     },
     computed: {
       getHistoryItems: function () {
+        if(!workoutStore.state.workoutHistory) {
+          return []
+        }
         return workoutStore.state.workoutHistory.map((it) => {
           return {
-            id: it._id,
-            title: it._id,
+            id: it.id,
+            title: it.id,
             startDate: new Date(+it.finishedTimestamp)
           }
         })
       },
       getSumData: function () {
-        const workouts = workoutStore.state.workoutHistory;
-        let exercises = workouts.map(it => it.exercises).flat()
-        let sets = exercises.map(it => it.sets).flat();
+        let workouts = [];
+        let exercises = [];
+        let sets = [];
+        if (workoutStore.state.workoutHistory) {
+          workouts = workoutStore.state.workoutHistory;
+          exercises = workouts.map(it => it.exercises).flat()
+          sets = exercises.map(it => it.sets).flat();
+        }
 
         let totalWorkouts = workouts.length;
         let totalSets = sets.length;
         let totalReps = sets.map(it => it.reps).reduce((a, b) => a + b, 0);
         let totalVolume = sets.map(it => it.reps * it.weight).reduce((a, b) => a + b, 0)
-        let averageVolume = (totalVolume / workouts.length)
+        let averageVolume = (totalVolume > 0) ? (totalVolume / workouts.length) : 0
 
         return {
           totalWorkouts: this.formatNumbers(totalWorkouts),
@@ -94,7 +102,7 @@
         this.showDate = d;
       },
       clickItem(e) {
-        const pastWorkout = workoutStore.state.workoutHistory.filter((it) => it._id === e.id)[0]
+        const pastWorkout = workoutStore.state.workoutHistory.filter((it) => it.id === e.id)[0]
         this.openModal(pastWorkout)
       },
       async openModal(workout) {
@@ -108,7 +116,7 @@
         });
 
         this.$router.replace({
-          query: { id: workout._id },
+          query: { id: workout.id },
         });
 
         await modal.present();
@@ -122,7 +130,7 @@
     mounted() {
       if (this.$route.query.id) {
         const foundDay = workoutStore.state.workoutHistory.filter((it) => {
-          return it._id === this.$route.query.id
+          return it.id === this.$route.query.id
         })
 
         if (foundDay.length > 0) {

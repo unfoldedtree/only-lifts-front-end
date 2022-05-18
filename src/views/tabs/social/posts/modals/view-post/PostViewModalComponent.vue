@@ -1,19 +1,32 @@
 <template>
     <div class="post-modal-container">
-        <post-view-post-modal-component v-bind:post="post"></post-view-post-modal-component>
+        <post-view-post-modal-component
+            :post="viewPost"
+            @updatePost="updatePost"
+        >
+        </post-view-post-modal-component>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import PostViewPostModalComponent from './components/PostViewPostModalComponent.vue';
+import {Post} from "@/models/post";
 
 export default defineComponent({
     components: {PostViewPostModalComponent},
-    props: ['post'],
-    methods: {},
+    props: ['homeRef', 'post'],
     data() {
-        return {}
+      return {
+        viewPost: this.post
+      }
+    },
+    methods: {
+      async updatePost(oldPost: Post, newPost: Post) {
+        newPost.user = oldPost.user
+        await this.homeRef.updatePost(oldPost, newPost)
+        this.viewPost = newPost
+      }
     }
 })
 </script>

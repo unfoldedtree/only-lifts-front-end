@@ -6,7 +6,7 @@
                 <div class="post-profile-image"></div>
             </div>
             <div class="post-profile-user-info">
-                <div>William McMahan</div>
+                <div>{{ post.user.getUserName() }}</div>
                 <div>
                     <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
                 </div>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="post-button-div">
-            <div class="post-button" @click="toggleLike">Like</div>
+            <div class="post-button" @click="toggleLike" :class="inLikes() ? 'selected' : ''">Like</div>
             <div class="post-button">Comment</div>
             <div class="post-button">Share</div>
         </div>
@@ -46,6 +46,8 @@
   import { thumbsUp, mail, ellipsisHorizontal, caretForwardCircle, close, heart, trash, share } from 'ionicons/icons';
   import PostViewModalComponent from "./modals/view-post/PostViewModalComponent.vue";
   import axios from "axios";
+  import {Post} from "@/models/post";
+  import {userStore} from "@/stores/user";
 
   export default defineComponent({
     components: {
@@ -60,14 +62,15 @@
     },
     props: ['post'],
     data() {
-        return {
-            
-        }
+        return {}
     },
     methods: {
         async toggleLike() {
           const { data } = await axios.get(`http://localhost:3000/post/${this.post.id}/like`)
-          console.log(data)
+          this.$emit("updatePost", this.post, new Post(data))
+        },
+        inLikes() {
+          return this.post.likes.includes(userStore.state.sessionUser.userId)
         },
         processDate(postDate: number) {
             let timeText = "Now"
@@ -276,5 +279,8 @@
     }
     .post-button:hover {
         background-color: var(--card-background-flat);
+    }
+    .post-button.selected {
+      background-color: var(--card-background-flat);
     }
 </style>

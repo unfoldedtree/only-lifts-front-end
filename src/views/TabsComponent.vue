@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content scroll-y="false">
-      <ion-tabs>
+      <ion-tabs  v-if="isMounted">
         <ion-router-outlet></ion-router-outlet>
         <ion-tab-bar slot="bottom">
           <ion-tab-button tab="social" href="/social">
@@ -30,6 +30,7 @@
           </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
+<!--      <div v-else>Loading...</div>-->
     </ion-content>
   </ion-page>
 </template>
@@ -48,8 +49,10 @@
   import { people, calendar, watch, settings, chatbubbles } from 'ionicons/icons';
   import axios from "axios";
   import {workoutStore} from "@/stores/workoutInfo";
+  import {userStore} from "@/stores/user";
+  import {defineComponent} from "vue";
 
-  export default {
+  export default defineComponent({
     name: 'TabsComponent',
     components: {
       IonContent,
@@ -70,13 +73,26 @@
         chatbubbles,
       };
     },
-    async mounted() {
-      const { data } = await axios.get("http://localhost:3000/profile")
-      if (data.currentProgramId) {
-        workoutStore.commit("prepareWorkoutData", data)
+    data() {
+      return {
+        isMounted: false
       }
     },
-  };
+    methods: {},
+    async mounted() {
+      if (!userStore.state.sessionUser.userId) {
+        const { data } = await axios.get("http://localhost:3000/profile")
+        userStore.commit("setSessionUser", data)
+        console.log("Session User: ", userStore.state.sessionUser)
+      }
+
+      if (userStore.state.sessionUser.currentProgramId) {
+        workoutStore.commit("prepareWorkoutData", userStore.state.sessionUser)
+      }
+
+      this.isMounted = true
+    },
+  });
 </script>
 
 <style scoped>

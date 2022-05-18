@@ -71,7 +71,7 @@ export default defineComponent({
         swipeToClose: false,
       });
 
-      await this.$router.replace({ query: { id: workoutStore.state.currentWorkout._id }});
+      await this.$router.replace({ query: { id: workoutStore.state.currentWorkout.id }});
       await modal.present();
       const { data } = await modal.onDidDismiss();
       await this.$router.push(this.$route.path);
@@ -103,7 +103,7 @@ export default defineComponent({
     loadModal() {
       console.log("New Schedule: ", this.computeRollingSchedule)
       if (this.$route.query.id) {
-        const foundDay = this.computeRollingSchedule.filter((it: any) => it._id == this.$route.query.id)[0]
+        const foundDay = this.computeRollingSchedule.filter((it: any) => it.id == this.$route.query.id)[0]
         console.log(foundDay)
         this.openModal(foundDay)
       }

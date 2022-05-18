@@ -3,8 +3,8 @@ import axios from "axios";
 
 export class Workout {
     public static async getActiveProgram(user: any) {
-        if (user.currentWorkoutProgramId) {
-            const { data } = await axios.get(`http://localhost:3000/workouts/${user.currentWorkoutProgramId}`)
+        if (user.currentProgramId) {
+            const { data } = await axios.get(`http://localhost:3000/workouts/${user.currentProgramId}`)
             return data;
         } else {
             return null;
@@ -12,10 +12,13 @@ export class Workout {
     }
 
     public static getRelevantHistory(user: any, activeProgram: any) {
-        const activeProgramWorkoutIds = activeProgram.schedule.map((it: any) => it._id);
+        const activeProgramWorkoutIds = activeProgram.schedule.map((it: any) => it.id);
+        if (!user.workoutHistory) {
+            return []
+        }
         return user.workoutHistory
             .filter((it: any) => activeProgramWorkoutIds
-            .includes(it._id))
+            .includes(it.id))
             .sort((a: any, b:any) => a.finishedTimestamp > b.finishedTimestamp ? 1 : -1);
     }
 
@@ -30,9 +33,9 @@ export class Workout {
     }
 
     private static computeSchedule(schedule: any, recentCycle: any) {
-        const recentCycleIds = recentCycle.map((it: any) => it._id);
-        const filteredSchedule = schedule.filter((it: any) => recentCycleIds.includes(it._id));
-        let newSchedule = schedule.filter((it: any) => !recentCycleIds.includes(it._id));
+        const recentCycleIds = recentCycle.map((it: any) => it.id);
+        const filteredSchedule = schedule.filter((it: any) => recentCycleIds.includes(it.id));
+        let newSchedule = schedule.filter((it: any) => !recentCycleIds.includes(it.id));
         const successfulLifts: any[] = [];
 
         recentCycle.forEach((day: any) => {
