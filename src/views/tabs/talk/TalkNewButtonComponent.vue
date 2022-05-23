@@ -56,7 +56,7 @@
           return;
         }
 
-        this.$emit("create-message", newResponse.data)
+        this.$emit("createRoom", newResponse.data)
       },
     },
     setup() {

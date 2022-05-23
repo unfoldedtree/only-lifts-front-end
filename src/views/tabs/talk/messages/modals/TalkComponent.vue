@@ -4,14 +4,14 @@
             <div class="post-profile-pic">
                 <div class="post-profile-image"></div>
             </div>
-            <div class="post-profile-user-info">
+            <div class="post-profile-user-info" @click="openViewRoomModal">
                 <div>{{ processUsers() }}</div>
                 <div>
-                    <span class="post-date-info">{{ message.content }}</span>
+                    <span class="post-date-info">{{ room.messages[room.messages.length - 1].content }}</span>
                 </div>
             </div>
              <div class="post-options">
-                 <div class="post-options-button" @click="presentActionSheet(message)">
+                 <div class="post-options-button" @click="presentActionSheet(room)">
                      <ion-icon class="post-options-button" :icon="ellipsisHorizontal" />
                  </div>
             </div>
@@ -23,7 +23,8 @@
   import { defineComponent } from 'vue';
   import { IonIcon, modalController, actionSheetController } from '@ionic/vue';
   import { thumbsUp, mail, ellipsisHorizontal, caretForwardCircle, close, heart, trash, share } from 'ionicons/icons';
-  import PostViewModalComponent from "./modals/view-post/PostViewModalComponent.vue";
+  import ChatRoomViewModalComponent from "@/views/tabs/talk/messages/modals/room/ChatRoomViewModalComponent.vue";
+  import {userStore} from "@/stores/user";
 
   export default defineComponent({
     components: {
@@ -36,31 +37,35 @@
           ellipsisHorizontal
       };
     },
-    props: ['message', 'users'],
-    data() {
-        return {
-            
-        }
-    },
+    props: ['homeRef', 'room', 'users'],
+    data() { return {} },
     methods: {
-        // async openViewPostModal(post: any):Promise<any> {
-        //     const modal = await modalController
-        //         .create({
-        //             component: PostViewModalComponent,
-        //             cssClass: 'fullscreen',
-        //             swipeToClose: false,
-        //             componentProps: {
-        //                 post: post
-        //             }
-        //         })
-        //     return modal.present()
-        // },
+        async openViewRoomModal():Promise<any> {
+            const modal = await modalController
+                .create({
+                    component: ChatRoomViewModalComponent,
+                    cssClass: 'fullscreen',
+                    swipeToClose: false,
+                    componentProps: {
+                        homeRef: this.homeRef,
+                        room: this.room
+                    }
+                })
+            return modal.present()
+        },
         processUsers() {
-          // users.map((it) => it.name).join(',')
-          if (this.users.length > 1) {
-            return `${this.users[0].name} + ${this.users.length - 1}`
+          const displayUsers = this.users.filter((user: any) => user.userId !== userStore.state.sessionUser.userId)
+          if (displayUsers.length > 1) {
+            return `${this.getName(displayUsers[0])} + ${displayUsers.length - 1}`
           } else {
-            return this.users[0].name
+            return this.getName(displayUsers[0])
+          }
+        },
+        getName(user: any) {
+          if (user.middleName) {
+            return `${user.firstName} ${user.middleName} ${user.lastName}`
+          } else {
+            return `${user.firstName} ${user.lastName}`
           }
         },
         processDate(postDate: number) {

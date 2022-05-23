@@ -30,6 +30,7 @@
   import { IonIcon, modalController, IonTextarea } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import { Post } from "@/models/post";
+  import {userStore} from "@/stores/user";
 
   export default defineComponent({
     components: {
@@ -58,12 +59,14 @@
       },
       buildMessage() {
         const messageObj = {
-          id: Date.now(),
-          send: Date.now(),
           content: this.messageContent,
-          recipients: this.recipients.map((it: any) => it.id)
+          taggedIds: [],
+          attachments: []
         }
-        modalController.dismiss(messageObj)
+
+        const chatMembers = [ ...this.recipients.map((it: any) => it.id), userStore.state.sessionUser.userId ]
+
+        modalController.dismiss({ messageObj: messageObj, chatMembers: chatMembers })
       }
     }
   });

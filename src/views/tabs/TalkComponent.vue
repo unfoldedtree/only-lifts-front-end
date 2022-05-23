@@ -24,13 +24,13 @@
           </div>
         </div>
         <div id="talk-container">
-          <div v-if="filteredMessages.length">
-            <talk-component v-for="message in filteredMessages" :key="message.id" :message="message" :users="getUsers(message)" />
+          <div v-if="filteredRooms.length">
+            <talk-component v-for="room in filteredRooms" :homeRef="this" :key="room.id" :room="room" :users="room.users" />
           </div>
           <div class="no-messages-div" v-else>No Conversations</div>
         </div>
       </div>
-      <talk-new-button-component @create-message="createMessage" :users="filteredUsers"  />
+      <talk-new-button-component @createRoom="createRoom" :users="filteredUsers"  />
     </ion-content>
   </ion-page>
 </template>
@@ -64,7 +64,7 @@ export default defineComponent({
       activeTab: 0,
       tabArr: ['all', 'friends', 'trainers', 'groups'],
       filteredUsers: [] as any[],
-      filteredMessages: [] as any[]
+      filteredRooms: [] as any[]
     }
   },
   methods: {
@@ -82,17 +82,24 @@ export default defineComponent({
         }
       })
     },
-    getUsers(message: any) {
-      return this.filteredUsers.filter((it: any) => message.recipients.includes(it.id))
+    async updateRoom(oldRoom: any, newRoom: any) {
+      this.filteredRooms[this.filteredRooms.indexOf(oldRoom)] = newRoom
     },
-    createMessage(message: any) {
-      // TODO add support creating of chat room and sending of message.
-      this.filteredMessages.unshift(message)
+    async createRoom(details: any) {
+      const message = details.messageObj;
+      const room = details.chatMembers;
+      const { data } = await axios.post('http://localhost:3000/chat-room/create', {
+        message: message,
+        room: room
+      });
+      this.filteredRooms.unshift(data)
     },
   },
   async beforeMount() {
-    const {data} = await axios.get('http://localhost:3000/profiles/minimal');
-    this.extractUsers(data)
+    const profiles= await axios.get('http://localhost:3000/profiles/minimal');
+    this.extractUsers(profiles.data)
+    const chatRooms = await axios.get('http://localhost:3000/chat-rooms');
+    this.filteredRooms = chatRooms.data.sort((a: any, b: any) => +b.firstMessage > +a.firstMessage ? 1 : -1)
   }
 });
 </script>
