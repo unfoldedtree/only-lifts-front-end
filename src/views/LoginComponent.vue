@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { IonLabel, IonItem, IonInput, IonButton, IonCheckbox, IonPage, IonContent } from '@ionic/vue';
+import { IonLabel, IonItem, IonInput, IonButton, IonCheckbox, IonPage, IonContent, useIonRouter } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import axios from "axios";
 
@@ -50,6 +50,11 @@ export default defineComponent({
     IonPage,
     IonContent
   },
+  setup() {
+    return {
+      ionRouter: useIonRouter()
+    }
+  },
   data() {
     return {
       showProviders: false,
@@ -62,17 +67,17 @@ export default defineComponent({
       const { data } = await axios.post('http://localhost:3000/auth/login', { username: this.email, password: this.pass })
       console.log(data)
       if (data && data.accessToken) {
-        await this.$router.push({ name: 'social' })
+        await this.ionRouter.push({ name: 'social' })
       }
     },
     async goToReset() {
       const { data } = await axios.post('http://localhost:3000/auth/send-reset-code', { username: this.email })
       if (data) {
-        await this.$router.push({ name: 'reset-password', params: { username: this.email } })
+        await this.ionRouter.push({ name: 'reset-password', params: { username: this.email } })
       }
     },
     goToRegister() {
-      this.$router.push({ name: 'register'});
+      this.ionRouter.push({ name: 'register'});
     }
   }
 });

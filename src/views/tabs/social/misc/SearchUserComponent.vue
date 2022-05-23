@@ -1,10 +1,10 @@
 <template>
-  <div class="to-content-header" :class="inList ? 'in-list' : ''">
+  <div class="to-content-header">
     <div class="to-profile-pic">
       <div class="to-profile-image"></div>
     </div>
     <div class="to-profile-user-info">
-      <div>{{ user.name }}</div>
+      <div>{{ user.getUserName() }}</div>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default defineComponent({
       close
     };
   },
-  props: ["user", "inList"],
+  props: ["user"],
   data() {
     return {}
   },

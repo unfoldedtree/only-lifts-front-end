@@ -2,14 +2,16 @@
     <div class="post-outer-div">
 
         <div class="post-upper-details">
-            <div class="post-profile-pic">
-                <div class="post-profile-image"></div>
-            </div>
-            <div class="post-profile-user-info">
-                <div>{{ post.user.getUserName() }}</div>
-                <div>
-                    <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
-                </div>
+            <div class="post-details" @click="$emit('goToUserPage', post.user.userId)">
+              <div class="post-profile-pic">
+                  <div class="post-profile-image"></div>
+              </div>
+              <div class="post-profile-user-info">
+                  <div>{{ post.user.getUserName() }}</div>
+                  <div>
+                      <span class="post-date-info">{{ processDate(post.postedAt) }}</span>
+                  </div>
+              </div>
             </div>
              <div class="post-options">
                  <div class="post-options-button" @click="presentActionSheet(post)">
@@ -202,6 +204,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+    .post-details {
+      display: flex;
+      align-items: center;
     }
     .post-options {
         display: flex;

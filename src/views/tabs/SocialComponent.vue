@@ -1,9 +1,7 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-title>Social</ion-title>
-      </ion-toolbar>
+      <SocialHeaderComponent @goToUserPage="goToUserPage" @goToSearchPage="goToSearchPage" />
     </ion-header>
     <ion-content>
       <div id="post-container">
@@ -11,6 +9,7 @@
               v-for="post in filteredPosts"
               :key="post.id"
               :post="post"
+              @goToUserPage="goToUserPage"
               @viewPost="openViewPostModal"
               @updatePost="updatePost"
           />
@@ -21,13 +20,14 @@
 </template>
 
 <script lang="ts">
-  import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, modalController} from '@ionic/vue';
+  import {IonContent, IonHeader, IonPage, modalController, useIonRouter} from '@ionic/vue';
   import { defineComponent } from 'vue';
   import SocialNewButtonComponent from '@/views/tabs/social/SocialNewButtonComponent.vue';
   import PostComponent from './social/posts/PostComponent.vue';
   import {Post} from "@/models/post";
   import axios from "axios";
   import PostViewModalComponent from "@/views/tabs/social/posts/modals/view-post/PostViewModalComponent.vue";
+  import SocialHeaderComponent from "@/views/tabs/social/misc/SocialHeaderComponent.vue";
   import { search } from "ionicons/icons";
 
   export default defineComponent({
@@ -35,14 +35,14 @@
       IonContent,
       IonHeader,
       IonPage,
-      IonToolbar,
-      IonTitle,
       SocialNewButtonComponent,
+      SocialHeaderComponent,
       PostComponent,
     },
     setup() {
       return {
-        search
+        search,
+        ionRouter: useIonRouter()
       };
     },
     data() {
@@ -51,6 +51,12 @@
       }
     },
     methods: {
+      goToUserPage(userId: string) {
+        this.ionRouter.push({ name: 'view-user', params: { userId: userId} });
+      },
+      goToSearchPage() {
+        this.ionRouter.push({ name: 'social-search' });
+      },
       async createPost(post: Post) {
         const { data } = await axios.post('http://localhost:3000/posts', post)
         const newPost = new Post(data)

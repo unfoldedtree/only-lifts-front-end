@@ -22,6 +22,22 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/tabs/SocialComponent.vue'),
       },
       {
+        path: 'social/view/:userId',
+        name: 'view-user',
+        meta: {
+          requiresAuth: true
+        },
+        component: () => import('@/views/tabs/social/user/ViewUserPageComponent.vue')
+      },
+      {
+        path: 'social/search',
+        name: 'social-search',
+        meta: {
+          requiresAuth: true
+        },
+        component: () => import('@/views/tabs/social/SearchComponent.vue')
+      },
+      {
         path: 'talk',
         name: 'talk',
         meta: {
